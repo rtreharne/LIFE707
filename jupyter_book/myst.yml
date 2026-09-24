@@ -5,7 +5,7 @@ project:
   description: Practical R and biological data analysis
   authors:
     - University of Liverpool
-  github: REPLACE_WITH_OWNER/LIFE707
+  github: rtreharne/LIFE707
   static_files:
     - data
   toc:

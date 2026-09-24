@@ -33,8 +33,23 @@ def load_env():
     return values
 
 
-ENV = load_env()
-API, TOKEN, COURSE = ENV["CANVAS_API_URL"].rstrip("/"), ENV["CANVAS_API_TOKEN"], ENV["COURSE_ID_202627"]
+API = TOKEN = COURSE = None
+
+
+def configure_canvas():
+    """Load Canvas credentials only for actions that contact Canvas."""
+    global API, TOKEN, COURSE
+    env_file = ROOT / ".env"
+    if not env_file.exists():
+        raise RuntimeError("Canvas fetch requires a local .env file with Canvas credentials.")
+    env = load_env()
+    required = ("CANVAS_API_URL", "CANVAS_API_TOKEN", "COURSE_ID_202627")
+    missing = [key for key in required if not env.get(key)]
+    if missing:
+        raise RuntimeError(f"Canvas fetch requires: {', '.join(missing)}")
+    API = env["CANVAS_API_URL"].rstrip("/")
+    TOKEN = env["CANVAS_API_TOKEN"]
+    COURSE = env["COURSE_ID_202627"]
 
 
 def request(url):
@@ -247,7 +262,7 @@ def make_book(rendered):
         generated_assets = CONTENT / "chapters" / "assets" / "topic-1-sep"
         if generated_assets.exists():
             shutil.copytree(generated_assets, EDITABLE_TOPIC_1.parent / "assets" / "topic-1-sep", dirs_exist_ok=True)
-    toc = ["version: 1", "project:", "  id: life707-r-book", "  title: Biological Data Skills", "  description: Practical R and biological data analysis", "  authors:", "    - University of Liverpool", "  github: REPLACE_WITH_OWNER/LIFE707", "  static_files:", "    - data", "  toc:", "    - file: index.md"]
+    toc = ["version: 1", "project:", "  id: life707-r-book", "  title: Biological Data Skills", "  description: Practical R and biological data analysis", "  authors:", "    - University of Liverpool", "  github: rtreharne/LIFE707", "  static_files:", "    - data", "  toc:", "    - file: index.md"]
     toc.append(f"    - file: {EDITABLE_TOPIC_1.relative_to(BOOK).as_posix()}")
     toc.extend(("site:", "  template: book-theme", "  parts:", "    footer: footer.md", "  options:", "    logo_text: LIFE707 Biological Data Skills", "    folders: true"))
     # Native MyST configuration, mirroring the LIFE733 teaching book.
@@ -266,6 +281,8 @@ def build():
 
 if __name__ == "__main__":
     action = sys.argv[1] if len(sys.argv) > 1 else "all"
-    if action in ("fetch", "all"): fetch()
+    if action in ("fetch", "all"):
+        configure_canvas()
+        fetch()
     if action in ("render", "all"): render()
     if action in ("build", "all"): build()
