@@ -25,8 +25,6 @@ a great way to improve your understanding. You may wish to bring wired
 headphones to future workshops if you would like to listen to the audio.
 :::
 
-You should make sure that you view the video lectures and that you come to the workshops.
-
 ## Files for this week
 
 Download these files into the `LIFE707/Topic_1` folder you create below. They

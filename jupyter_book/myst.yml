@@ -12,6 +12,7 @@ project:
     - file: index.md
     - file: chapters/onboarding.md
     - file: chapters/topic-1.md
+    - file: chapters/topic-2.md
 site:
   template: book-theme
   parts:
