@@ -45,6 +45,12 @@ the material alongside your tutor and classmates. Workshops give you time to
 try the code, ask questions as they arise, and receive help with errors before
 they become frustrating.
 
+Complete the **Knowledge Check** and **Exercises** for every topic. These are
+an essential part of learning, not optional extras. Knowledge Checks help you
+identify ideas that need another look, while the Exercises give you practice in
+applying the code and interpreting biological data. Attempt both before moving
+to the next topic, and bring any difficulties to a workshop or drop-in session.
+
 Drop-in sessions are also an important source of support. Bring your R script,
 the relevant data file, and the exact error message or a screenshot. This makes
 it much easier for us to help you identify and fix the problem.
