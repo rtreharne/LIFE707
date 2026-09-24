@@ -1,0 +1,189 @@
+[Auto-generated transcript. Edits may have been applied for clarity.]
+I want to give an orientation to you on the RStudio environment,
+
+and you can open this either on the university's PCs, on your own laptop, or on the university's apps anywhere.
+
+And you should see something that looks like this.
+
+And the first thing you see is that there's this console pane, and there is a blinking cursor here, which is our waited for you to tell it what to do.
+
+So let's get stuck in. Let's tell our to do something.
+
+Let's ask our two. Tell us what two plus two is.
+
+So we type that into the console and it gives a result.
+
+And it gives that result there as four.
+
+So that all sounds good. That's not usually how we um, operate in our.
+
+So usually in our, uh, we act to use functions.
+
+So here's a function called square root. So let's see if we can get the square root of 16.
+
+And so this is the format here. The function is uh sqrt which is square root.
+
+And it has these brackets. And inside those brackets is the number that we want to take the square root of 16.
+
+And then when we type return after that we get the same results.
+
+Here the square root of 16 is four.
+
+So some of the advantages of working in R are that, uh, you're able to, uh, record all of the commands that you make and then able to,
+
+um, redo those commands again at some later point and keep the track of those commands as much as you would do for a lab book.
+
+But here the lab book is referring to what you do during an analysis.
+
+So let's move over to this pane on the bottom right here.
+
+So this is um, looking at the, uh, your file system.
+
+Uh, the directories and folders that you have. And here I'm sitting within one of my folders called teaching.
+
+So let's create, uh, a set of folders to organise all our work for.
+
+Ah. So we can click this new folder tab here.
+
+And. Let's give a name to this folder where we're going to put all of our live 707 work.
+
+And we can click on that to enter that folder.
+
+We can see we're sitting in that folder now because the path is changed.
+
+And actually let's organise ourselves a little bit more and have a folder for each of the topics that we're working on.
+
+So first topic here. Topic one create a folder for this.
+
+Topic one. Click on that and we move to within that folder.
+
+Another thing that we can do is and I strongly encourage you to do all the time,
+
+is to create a simple text file within our studio that's going to contain all of your commands that you use and comments that you make on them,
+
+and that lets you go back to those commands that you've run.
+
+And let's just see what you've done and lets you edit those.
+
+So if we go up here, uh, to this little new file tab here, it gives you a bunch of options.
+
+Let's just take the simplest one, which is the one at the top here.
+
+And our script. And here it's created this editor pane here.
+
+And we can, uh, do what we did before we can work out the square root of 16.
+
+We can enter this into this text file here as we did before.
+
+And here we can either copy and paste this into the pane below the console pane where all the commands are run.
+
+Or we can hit this run button here.
+
+And the line here your blinking cursor. The result will be the line that gets run by R.
+
+So we can try this now. And if we hit run there, you can see that it's just pasted that into the console for you.
+
+And it's given that um, result again result of four.
+
+If we want to add comments to a file this is a useful thing.
+
+It lets us work out what it is we did a few weeks ago.
+
+Uh, that's a reminders on that. So we can just edit that in here.
+
+And comments. In this case, we put a hash symbol in front of all the comments that we want to make.
+
+So that's a hash symbol there. And we can add in some comments on this.
+
+So I'm going to say these are notes on topic one. And we can go down here.
+
+We can add another comments to this particular command. To remind myself that this is how we, uh, work out what a square root is.
+
+What we should then do. So you see here that this is, uh, red, and it's untitled.
+
+So we want to, um, be able to save that.
+
+So we got to here, and we look down.
+
+Uh, we do save hours, just as you would do with a word document or anything else.
+
+And let's see. So let's already work our way through this.
+
+Uh, to top it one and then give it a file name here.
+
+Notes. And top it one. And we can save that.
+
+And what you see in the file directory here we've got this new file as in here as appeared nuts on top at once.
+
+R and R is just the standard file extension that lets your Windows or Mac work out, uh, that you've got.
+
+Um, this file is an R file. It's actually just a very simple text file though underneath that.
+
+So some of the other things that we step you through to do are to instead of just outputting the result of a
+
+command into the console here you can take the results of that command and take this into another object.
+
+So just taking a moment to look at this. So this line here, this is a very common construction in R.
+
+So here we've got um a function and a And function has got, um, brackets.
+
+And within the brackets is the object that we want to apply that function to.
+
+So we've got an object here which is the number 16. We want to apply the square root function to that which will give a result of four.
+
+And here this uh, arrow here which we create using the less than and uh, a dash that is the what's called the assignment operator.
+
+And that's basically as you can kind of see, it's going to take the result of this function here,
+
+the value four, and it's going to assign it to this new object that we're going to call Y.
+
+So the easiest way to see this perhaps is just to run this.
+
+So we hit the run button as we did before. That appears in the console.
+
+But this time there's we don't see that value for appearing here.
+
+But don't worry it's what it's got.
+
+It's still ours. Still got this blinking cursor. It's waiting for you to give it another command.
+
+But what you will see is that up in this top right hand pane, it's got an object here, uh,
+
+called Y, and it's actually showing you what the value of that is there, which is four.
+
+And we can see this if we like, we can go to the console.
+
+We can just type y in hit return. And then all that does is that it returns the value that's held in that object y there, which is this number four.
+
+So that's a very common construction you're taking, uh, a function.
+
+You're applying it to an object within these brackets.
+
+And you're taking what that function produces and you're assigning it to a value there which sits within your our environment.
+
+And as you go through the workshop, you'll see a number of different objects will appear in this environment there as you go through your code.
+
+So you see here that this is this file name is in red.
+
+And we could probably do with saving this. So let's just go to file and then save this.
+
+It's a useful practice just to get into saving this regularly.
+
+One of the final things which I get you to do a little bit later is to change the working directory, uh, that you use.
+
+So this is particularly when you're thinking about how to, uh, read data in.
+
+You want to tell our where to look for that data. And so one way to do this.
+
+We've already navigated to this folder.
+
+Topic one where we're going to hold all of the associated data that we need, and various files that we're going to use in topic one.
+
+So we can tell are that anything new that we're going to ask our to look for is going to be within this folder.
+
+And we do that in a couple of ways. Easiest way I find is to go up to this session.
+
+Plus in here go set working directory and to this files pane location which is that bottom right pane there navigated to.
+
+Already we do that and actually produces this uh command here set working directory to this uh, path uh which we set up.
+

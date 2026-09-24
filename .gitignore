@@ -1,0 +1,24 @@
+# Credentials and local environments
+.env
+.venv/
+
+# Python and R editor/session state
+__pycache__/
+*.py[cod]
+.Rhistory
+.RData
+.Rproj.user/
+.ipynb_checkpoints/
+
+# Operating-system/editor files
+.DS_Store
+.vscode/
+
+# Reproducible Jupyter Book build artefacts and local package libraries
+jupyter_book/.Rlib/
+jupyter_book/.work/
+jupyter_book/_build/
+jupyter_book/__pycache__/
+jupyter_book/content/
+jupyter_book/canvas_inventory.json
+jupyter_book/data_manifest.json
