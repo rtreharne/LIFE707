@@ -14,21 +14,21 @@ captioned video walkthroughs for the module.
 The eight topics build from using R for the first time to applying and
 interpreting statistical models for biological data. You will learn to:
 
-1. **Get started with R and RStudio** — organise your work, write and save R
+1. **Get started with R and RStudio:** organise your work, write and save R
    scripts, import data, and explore data frames.
-2. **Visualise biological data** — create clear plots that help you explore
+2. **Visualise biological data:** create clear plots that help you explore
    patterns and communicate results.
-3. **Use basic statistical tests** — select, apply, and interpret introductory
+3. **Use basic statistical tests:** select, apply, and interpret introductory
    tests in a biological context.
-4. **Wrangle and clean data** — prepare data for analysis by inspecting,
+4. **Wrangle and clean data:** prepare data for analysis by inspecting,
    reshaping, and transforming it carefully.
-5. **Use ANOVA and linear regression** — model relationships and compare groups
+5. **Use ANOVA and linear regression:** model relationships and compare groups
    using linear-model approaches.
-6. **Use multiple regression** — extend regression models to consider more than
+6. **Use multiple regression:** extend regression models to consider more than
    one explanatory variable.
-7. **Work with transformations and generalised linear models** — choose methods
+7. **Work with transformations and generalised linear models:** choose methods
    appropriate to the distribution and structure of your data.
-8. **Analyse survival data** — introduce methods for questions involving time
+8. **Analyse survival data:** introduce methods for questions involving time
    to an event.
 
 Across these topics, you will organise analyses clearly, write and annotate R

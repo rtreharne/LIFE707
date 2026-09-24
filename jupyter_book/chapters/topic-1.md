@@ -32,9 +32,9 @@ You should make sure that you view the video lectures and that you come to the w
 Download these files into the `LIFE707/Topic_1` folder you create below. They
 are included with this book, so you do not need to return to Canvas.
 
-- <a href="/data/topic-1-getting-started/DissolvedO2.txt?download=1">DissolvedO2.txt</a> — the text data used in the reading-data example.
-- <a href="/data/topic-1-getting-started/DissolvedO2.csv?download=1">DissolvedO2.csv</a> — the CSV version for the exercise.
-- <a href="/data/topic-1-getting-started/spider.txt?download=1">spider.txt</a> — the spider-data exercise.
+- <a href="/data/topic-1-getting-started/DissolvedO2.txt?download=1">DissolvedO2.txt</a>: the text data used in the reading-data example.
+- <a href="/data/topic-1-getting-started/DissolvedO2.csv?download=1">DissolvedO2.csv</a>: the CSV version for the exercise.
+- <a href="/data/topic-1-getting-started/spider.txt?download=1">spider.txt</a>: the spider-data exercise.
 
 ## Getting Started
 
@@ -229,7 +229,7 @@ head(iris) #prints first 6 lines
 ```
 
 ``` r
-summary(iris) #gives a summary of the data; minimum and maximum values, mean and median, and 1st and 3rd quartiles
+summary(iris) #gives a summary of the data, including minimum and maximum values, mean and median, and 1st and 3rd quartiles
 ```
 
 ```
@@ -370,8 +370,8 @@ Subsetting helps us to explore and analyse specific parts of our data and we'll 
 
 Use the [Topic 1 BioBoost quiz](https://canvas.liverpool.ac.uk/courses/93992/assignments/357982)
 to check your understanding of the material in this chapter. The quiz gives you
-a chance to retrieve and apply the key ideas—such as working in RStudio,
-organising files, reading data, and interpreting basic R output—before moving
+a chance to retrieve and apply the key ideas, such as working in RStudio,
+organising files, reading data, and interpreting basic R output, before moving
 on to the exercises.
 
 Knowledge checks are most useful when you attempt them after working through
@@ -388,7 +388,7 @@ version into R.
 
 1. Open <a href="/data/topic-1-getting-started/DissolvedO2.txt?download=1">DissolvedO2.txt</a> in
    a text editor (for example, Notepad on Windows or TextEdit on macOS). Notice
-   that values are separated by whitespace—a space or a tab.
+   that values are separated by whitespace, a space or a tab.
 2. Open <a href="/data/topic-1-getting-started/DissolvedO2.csv?download=1">DissolvedO2.csv</a> in
    the same text editor. What separates the values in this file?
 3. In RStudio, type `?read.csv` in the Console to open the help page.

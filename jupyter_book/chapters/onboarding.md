@@ -63,8 +63,8 @@ sqrt(16)
 ```
 
 The Console should return `4`. Save the script in `LIFE707/Topic_1` as
-`Notes_on_Topic_1.R`. An R script is a plain text record of your commands—the
-analysis equivalent of a lab book—so save it regularly and add notes using
+`Notes_on_Topic_1.R`. An R script is a plain text record of your commands, the
+analysis equivalent of a lab book, so save it regularly and add notes using
 comments beginning with `#`:
 
 ```r
@@ -73,7 +73,7 @@ sqrt(16)  # calculate the square root of 16
 ```
 
 As you work, objects you create will appear in the **Environment** pane. For
-example, running `y <- sqrt(16)` stores the result in an object called `y`;
+example, running `y <- sqrt(16)` stores the result in an object called `y`,
 typing `y` in the Console shows its value.
 
 ## Set the working directory
@@ -95,7 +95,7 @@ inside it. Topic 1 will return to this when we read in data.
 
 ## Installing R and RStudio on your own device
 
-Install **R first**, then **RStudio Desktop**. R is the language; RStudio is
+Install **R first**, then **RStudio Desktop**. R is the language, and RStudio is
 the application used to write, run and save R code.
 
 ### Windows
@@ -113,7 +113,7 @@ the application used to write, run and save R code.
 1. Download and install [R for macOS](https://cran.r-project.org/bin/macosx/).
 2. Download RStudio Desktop for macOS from [Posit](https://posit.co/download/rstudio-desktop/),
    open the downloaded disk image, and move RStudio to Applications.
-3. Open RStudio and run `sqrt(16)` in the Console; it should return `4`.
+3. Open RStudio and run `sqrt(16)` in the Console. It should return `4`.
 4. Create the `LIFE707/Topic_1` folder and save a test R script there.
 
 ### Chromebook
@@ -122,7 +122,7 @@ RStudio Desktop does not have a standard ChromeOS installer. If your Chromebook
 supports the ChromeOS Linux development environment, you can install the Linux
 versions of [R](https://cran.r-project.org/bin/linux/) and [RStudio
 Desktop](https://posit.co/download/rstudio-desktop/). This depends on the model
-and whether Linux has been enabled; follow the instructions supplied with your
+and whether Linux has been enabled. Follow the instructions supplied with your
 Chromebook to enable Linux first.
 
 Once both are installed, open RStudio and run `sqrt(16)` in the Console. It

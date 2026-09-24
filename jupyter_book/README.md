@@ -11,7 +11,7 @@ Markdown with knitr, creates the consolidated final Solutions chapter, and
 builds GitHub Pages-ready static HTML into `_build/html`.
 
 `chapters/topic-1.md` is the canonical, hand-editable MyST source used by the
-published book. It was bootstrapped from the executed Topic 1 Rmd; edit this
+published book. It was bootstrapped from the executed Topic 1 Rmd. Edit this
 Markdown file (and its sibling `chapters/assets/topic-1-sep/` images) rather
 than the generated `content/` files. To enable a hosted Edit button, replace
 the placeholder `project.github` value in `myst.yml` with the real repository.
