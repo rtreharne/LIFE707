@@ -41,7 +41,7 @@ notes in your own R scripts, and use the exercises to check your understanding.
 ## The best way to engage with LIFE707
 
 The best way to learn these skills is to attend the workshops and work through
-the material alongside your tutor and classmates. Workshops give you time to
+the material alongside the teaching team and your classmates. Workshops give you time to
 try the code, ask questions as they arise, and receive help with errors before
 they become frustrating.
 
