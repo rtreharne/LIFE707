@@ -366,6 +366,19 @@ disox[c(1,5,18,80),]
 
 Subsetting helps us to explore and analyse specific parts of our data and we'll build on subsetting techniques more in later topics.
 
+## Knowledge Check
+
+Use the [Topic 1 BioBoost quiz](https://canvas.liverpool.ac.uk/courses/93992/assignments/357982)
+to check your understanding of the material in this chapter. The quiz gives you
+a chance to retrieve and apply the key ideas—such as working in RStudio,
+organising files, reading data, and interpreting basic R output—before moving
+on to the exercises.
+
+Knowledge checks are most useful when you attempt them after working through
+the chapter, then return to the relevant section when you find a gap in your
+understanding. They can help you focus questions for workshops or drop-in
+sessions and build confidence with the concepts you will use in later topics.
+
 ## Exercises
 
 ### Reading in csv files

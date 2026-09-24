@@ -8,6 +8,8 @@ import migrate_life707 as canvas
 
 
 BASE = f"https://canvas.liverpool.ac.uk/courses/{canvas.DEST}"
+ONBOARDING_BOOK_URL = "https://rtreharne.github.io/LIFE707/chapters/onboarding/"
+TOPIC_1_BOOK_URL = "https://rtreharne.github.io/LIFE707/chapters/topic-1/"
 STYLE = "margin:24px 0;padding:22px 24px;border:2px solid #2287b5;border-radius:12px;background:#ffffff;color:#13253b;"
 PALETTE = {
     "#2287b5": "#0f766e",  # borders
@@ -58,9 +60,25 @@ def week_card(week: int, monday: str, friday: str, title: str, module_id: int | 
     card_style = "display:flex;flex-direction:column;min-height:335px;padding:22px;border:2px solid #2287b5;border-top:6px solid #0c5b96;border-radius:14px;background:#ffffff;"
     if module_id is None and week in (6, 7):
         content = '<div style="margin-top:auto;padding:12px 0;border-top:2px solid #a9ccdf;color:#13253b;"><p style="margin:0;font-size:0.92em;line-height:1.6;">No workshop or drop-in session is scheduled this week.</p></div>'
+    elif week == 1:
+        content = session_summary(monday, friday) + f'<a style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding:11px 14px;border:2px solid #0c5b96;border-radius:8px;background:#d8f2f8;color:#13253b;text-decoration:none;" href="{TOPIC_1_BOOK_URL}">Open Topic 1 book <span aria-hidden="true">→</span></a>'
     else:
-        content = session_summary(monday, friday) + f'<a style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding:11px 14px;border:2px solid #0c5b96;border-radius:8px;background:#d8f2f8;color:#13253b;text-decoration:none;" href="{BASE}/modules/{module_id}">Open module <span aria-hidden="true">→</span></a>'
+        content = session_summary(monday, friday) + '<span style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding:11px 14px;border:2px solid #a9ccdf;border-radius:8px;background:#f3f4f6;color:#6b7280;cursor:not-allowed;" aria-disabled="true">Available soon</span>'
     return f'<article style="{card_style}"><p style="margin:0 0 9px;color:#0c5b96;font-size:0.78em;">WEEK {week}</p><h2 style="margin:0 0 18px;color:#13253b;font-size:1.2em;line-height:1.35;">{title}</h2>{content}</article>'
+
+
+def onboarding_card() -> str:
+    card_style = "display:flex;flex-direction:column;min-height:335px;padding:22px;border:2px solid #2287b5;border-top:6px solid #0c5b96;border-radius:14px;background:#ffffff;"
+    content = ('<div style="margin-top:auto;padding:12px 0;border-top:2px solid #a9ccdf;color:#13253b;">'
+               '<p style="margin:0;font-size:0.92em;line-height:1.6;">We will complete onboarding together at the very start of the first workshop. It will help you get set up with RStudio and organise your LIFE707 files.</p>'
+               '</div>'
+               f'<a style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding:11px 14px;border:2px solid #0c5b96;border-radius:8px;background:#d8f2f8;color:#13253b;text-decoration:none;" href="{ONBOARDING_BOOK_URL}">Open onboarding <span aria-hidden="true">→</span></a>')
+    return f'<article style="{card_style}"><p style="margin:0 0 9px;color:#0c5b96;font-size:0.78em;">GET STARTED</p><h2 style="margin:0 0 18px;color:#13253b;font-size:1.2em;line-height:1.35;">Onboarding</h2>{content}</article>'
+
+
+def home_page() -> str:
+    cards = onboarding_card() + ''.join(week_card(*week) for week in WEEKS)
+    return header("LIFE707 · Biological Data Skills") + nav() + f'<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:18px;align-items:stretch;" aria-label="Weekly course content">{cards}</section>'
 
 
 def full_schedule() -> str:
@@ -82,7 +100,7 @@ def update(slug: str, body: str) -> None:
 
 
 def main() -> None:
-    home = header("LIFE707 · Biological Data Skills") + nav() + '<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:18px;align-items:stretch;" aria-label="Weekly course content">' + ''.join(week_card(*week) for week in WEEKS) + '</section>'
+    home = home_page()
     general = (f'<nav style="margin:0 0 16px;padding:11px 14px;border:1px solid #2287b5;border-radius:8px;background:#fff;color:#13253b;" aria-label="Breadcrumb"><a style="color:#13253b;" href="{BASE}">Home</a> / General information</nav>' + header("Biological Data Skills") +
                f'<section style="{STYLE}"><h2 style="margin:0 0 10px;color:#13253b;">Module overview</h2><p>LIFE707 develops practical, reproducible approaches to biological data visualisation, statistical testing, data wrangling, regression, transformations, generalised linear models, and survival analysis.</p></section>' +
                f'<section style="{STYLE}"><h2 style="margin:0 0 10px;color:#13253b;">Learning objectives</h2><ul><li>Visualise and communicate biological data clearly.</li><li>Select, apply, and interpret appropriate statistical tests and models.</li><li>Clean, transform, and analyse data using reproducible workflows.</li><li>Critically evaluate statistical output in a biological context.</li></ul></section>' +
