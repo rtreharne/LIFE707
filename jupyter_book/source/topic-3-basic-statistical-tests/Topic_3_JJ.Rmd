@@ -1,0 +1,336 @@
+---
+title: "Topic 3"
+author: "Steve Paterson and Jordan Jones"
+date: "2024-07-30"
+output: html_document
+---
+
+```{r include=FALSE}
+wkdir <- "~/Dropbox/teaching/LIFE707/LIFE707_24_25/Topic_material/separate_topics/Topic_3"
+
+knitr::opts_chunk$set(echo = TRUE, root.dir = wkdir)
+
+setwd(wkdir)
+```
+
+## Hypothesis testing
+
+In the last topic we described data graphically. Plotting data is good at suggesting patterns in the data. Statistical testing then formalises questions we might ask, is there a difference between two groups? If individuals are bigger for one variable do they also tend to be bigger for another variable? If we see a lot of one thing happening do we also see a lot of another thing happening?
+
+Statistical tests are usually framed by testing a null hypothesis, where the null hypothesis is that the pattern we're interested in could have occurred by random chance. A statistical test assigns a probability to this - a p-value. A low p-value indicates that there is very little chance that the observed data could have arisen without there being a difference in the mean between two groups A and B, that is is unlikely there is no correlation between variables x and y, or that smoking does not cause lung cancer, etc. In biology, we typically take a p-value of less than 5% (p \< 0.05) as 'significant', i.e. we reject the null hypothesis and
+
+What follows is a practical guide to how to apply three simple and commonly used statistical tests in R. For further theoretical background, please refer to the video at the start of the topic or any standard statistical textbook. In later topics, we'll introduce further statistical tests that build on these. Throughout the module, we won't delve deeply into the maths underpinning these or other statistical tests, confining ourselves mostly to when and how to use them rather than how they work.
+
+## Comparing between 2 groups: t-test
+
+We'll be doing some plots in `ggplot` so we need to load the tidyverse package.
+
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+We'll return to the dataset of Pima Native Americans and diabetes. I've created a version of this called pima_cleaned.txt which has missing values removed and is easier to work with for the exercises here (cleaning data is covered in the next topic). Download this and read it in.
+
+```{r}
+pima <- read.table("pima_cleaned.txt",header=TRUE) #we'll just call the dataframe pima
+pima$test<- factor(pima$test) # test is either positive or negative for diabetes and we tell R it's a factor
+
+#What does it look like, can also use View(pima)
+summary(pima)
+```
+
+-   *Test*. Diabetes test result (positive/negative)
+
+-   *Age* in years
+
+-   *Glucose*. Glucose tolerance test (mg glucose/dL plasma)
+
+-   *Diastolic* blood pressure (mm Hg)
+
+-   *BMI*. Body mass index (kg/(height in m)^2^)
+
+In the last topic we used the pima dataset to plot distributions. Let's use what you learnt there to explore the distribution of glucose.
+
+```{r, message=FALSE}
+#what to plot, we're interested in glucose distribution
+pima.hist <- ggplot(data=pima, mapping = aes(x=glucose))
+
+#how to plot it, histograms for negative and positive individuals
+pima.hist + geom_histogram() + facet_wrap(~test) +
+  xlab("Glucose concentration (mg/dL")
+
+
+#you could also try
+#pima.hist + geom_density() + facet_wrap(~test)
+
+```
+
+Before we get any further with running a test or further coding let's pause and see what patterns are in the data. We've plotted histograms to give the distribution of glucose concentrations found in individuals testing positive or negative for diabetes. These distributions are fairly symmetrical. The distribution for negative individuals is taller than that for positive individuals. This just means there are more negative than positive individuals in the dataset. The distribution for positive individuals is centered further along the x-axis, indicating it has a higher mean value than negative individuals. So plotting the data therefore gives rise to the hypothesis that diabetic positive individuals have higher glucose concentration than negative individuals.
+
+What we want to do is to test; are the means between the two groups significantly different from each other? (Or, can we reject the null hypothesis that these two distributions could have arisen by chance with no difference between groups?). At the end of this section, we'll run a single line of R code that will tell us this using a t-test. But, to understand what's going on, let's first calculate the mean, standard deviation and standard error for each group.
+
+Some definitions, which many of you will be familiar with.
+
+-   [Mean](https://en.wikipedia.org/wiki/Mean). Often called the average, this adds up all the values in a group and divides by the number of datapoints in the group. The mean $\bar{x}$ for a set of data ${x_{1}, x_{2}, ...,x_{i}, ... x_{n}}$ is $\bar{x} = \frac{\sum(x)}{n}$. To calculate the mean of a set of data in R we'd use `mean(x)`.
+
+-   [Standard deviation](https://en.wikipedia.org/wiki/Standard_deviation). This is a measure of the spread of data around the mean. Each datapoint will be either larger or smaller than the mean, and a higher standard deviation means that datapoints will tend, on average, to be further away from the mean. The standard deviation, sd, is $sd=\sqrt{\frac{\sum(x_{i}-\bar{x})^{2}}{n}}$. To calculate the standard deviation of a set of data in R we'd use `sd(x)`.
+
+-   [Standard error](https://en.wikipedia.org/wiki/Standard_error). This is a measure of how confident we are that the mean we calculate from the sample of data we've collected really reflects the mean from the population we've taken those samples from. Because individuals vary, if we only measure one or two individuals we will have less confidence that the sample we've taken gives us a good estimate of the 'true' population mean than we would if we took a sample of hundreds of individuals. (This is why polling companies survey hundreds of people rather than ask a couple of random people on the street.) The standard error, se, is $se = \frac{sd}{\sqrt{n}}$. To calculate the standard error of a set of data in R we'd use `sd(x)/sqrt(n)`.
+
+We need to separate the two groups of negative and positive individuals. In the next topic you'll learn some powerful ways to subset and analyse dataframes, but let's do something simple here. In Topic 1 we touched on how to subset a dataframe using square brackets. For example, we took a dataframe called disox and the code `disox[1:4,]` returned the first 4 rows of the dataframe, where `1:4` is notation for the sequence {1, 2, 3, 4}. Instead of `1:4`, we can give a condition and return all rows where that condition is true. Thus, to create subsets of the pima data corresponding to individuals where the test is positive, we can write:
+
+```{r}
+pima.positive <- pima[pima$test=="positive",]
+```
+
+similarly:
+
+```{r}
+pima.negative <- pima[pima$test=="negative",]
+```
+
+We now have two dataframes, pima.negative and pima.positive split by negative vs positive individuals. Try `summary` on each dataframe.
+
+Let's get the mean glucose level for negative individuals and for positive individuals.
+
+```{r}
+mean(pima.negative$glucose)
+mean(pima.positive$glucose)
+```
+
+So that's a difference of around 30 mg/dL between the 'average' negative and the 'average' positive individual. But individuals in a group don't all have exactly the same value; there will be variation among individuals. We quantify this variation using the standard deviation.
+
+```{r}
+sd(pima.negative$glucose)
+sd(pima.positive$glucose)
+```
+
+So even within a group, it's not unusual for an individual to be 25 or 29 mg/dL higher or lower than the mean for that group. Look back at the histograms we plotted for positive and negative individuals and this ties in with that.
+
+Nevertheless, on those histograms, there's a lot of data within each group and, despite overlap between the two groups, our intuition would probably tell us that there are typically higher glucose levels in the positive group. Calculating the standard error formalises this intuition and provides a relationship between the amount of data we have and our confidence in saying where the mean is. Because the standard error is the standard deviation divided by the square root of the sample size, the bigger the sample size the smaller the standard error.
+
+First we need to count how many individuals are positive and how many are negative. We saw this at the start when we read in the data using `summary(pima)`. (You could also try `table(pima$test)` or `nrow(pima.positive)` if you like.) There are 475 negative and 248 positive individuals.
+
+To get the standard errors
+
+```{r}
+#negative
+sd(pima.negative$glucose)/sqrt(475)
+
+#positive
+sd(pima.positive$glucose)/sqrt(248)
+```
+
+So for the negative group, we've estimated a mean of \~110.6 mg/dL. Hypothetically, if we were to sample another 475 individuals we wouldn't get exactly the same mean. It wouldn't be unusual to get \~1.1 mg/dL higher or lower than this value. But getting twice this, 2.2 mg/dL higher or lower might be a bit unlikely. But getting three times (3.3mg/dL) or four times (4.4 mg/dL) than the standard error would be highly unlikely. The means of the negative and positive groups are 110.6 and 142.2, respectively, or \~31.6 mg/dL difference between their means. So it seems incredibly unlikely that, if there really were no difference in glucose levels between individuals testing positive and negative, we would get means in the two groups that we observe. In essence, this is what a t-test does. It looks at the means of two groups, and asks how far apart they are in terms of the standard errors and, with a bit of math, gives a p-value corresponding to the likelihood of the null hypothesis.
+
+The function `t.test` uses the same formula we've seen before, here setting glucose as the dependent (y) variable and test as the explanatory (x) variable.
+
+```{r}
+#one line of code saves you the hard work of calculating means and standard errors for each group...
+t.test(glucose ~ test, data=pima)
+```
+
+Here the p-value is very small (p \< 0.00000000000000022, but typically we'd just report p\<0.001) and so we reject the null hypothesis and conclude that the mean of the positive group is higher than that of the negative group. By default, R will use a Welch t-test, which is a robust implementation of a t-test where groups don't have to have the same standard deviation or number of observations.
+
+### Exercises
+
+#### Exercise 1
+
+> The file pima.20.txt has a random sub-sample of 10 negative and 10 positive individuals taken from the larger file.
+>
+> 1.  Analyse this smaller dataset to get the mean, standard deviation and standard error for glucose in the positive and negative groups and conduct a t-test to test whether there's a difference in glucose level between the two groups.
+> 2.  Repeat for BMI in both the full dataset (pima_cleaned.txt) and the reduced dataset (pima.20.txt).
+> 3.  What's the effect of reducing the sample size?
+
+#### Exercise 2
+
+> Read in the “chickwts_edited.csv” file. The data set contains the weight (g) of chickens from two groups which have been fed different types of diet. Check the data has been read into R correctly.
+>
+> 1.  Determine whether the data are normally distributed (*Hint:* You may need to play around with the “bins=” function as discussed in topic 2, as the data set is small (n = 60).
+> 2.  Produce a plot of the data to publication standard using ggplot2.
+> 3.  State the null and alternative hypotheses and conduct a t-test to determine whether we can reject or accept the null hypothesis.
+
+## Correlations
+
+We've already looked at correlations informally in Topic 2 when we plotted out pairs of continuous variables. Let's use another example to look at correlations in a little more detail.
+
+The short-eared possum ([*Trichosurus caninus*](https://en.wikipedia.org/wiki/Short-eared_possum)) is an adorable species of marsupial living in Eastern Australia. Measurements have been taken on various morphological characteristics.
+
+![](images/clipboard-532530667.png)
+
+Read in the data from the file possum.csv.
+
+```{r}
+possum <- read.csv("possum.csv")
+head(possum)
+```
+
+We'll just look at 4 variables:
+
+-   *totlngth* Total length (cm)
+
+-   *hdlngth* Head Length (mm)
+
+-   *skullw* Skull width (mm)
+
+-   *taill* Tail length (cm)
+
+Like any animal, some individuals are larger than others. We might expect animals with bigger heads to be bigger overall and so to have bigger tails, feet, etc. What we're saying is that there will be a correlation between traits. Let's start by looking at the relationship between head size and total length.
+
+We use ggplot to say what we want to plot (the variables *hdlngth* and *totlngth*) and then say that we want a scatter plot (`geom_point`).
+
+```{r}
+possum.plot1 <- ggplot(data=possum, aes(x=hdlngth,y=totlngth))
+possum.plot1 + geom_point() +
+  xlab("Head length (mm)") + ylab("Total length (cm)")
+```
+
+> OK. Over to you. Now plot head length versus skull width and head length versus tail length.
+
+You should get something like:
+
+```{r, echo=FALSE, message=FALSE}
+possum.plot2 <- ggplot(data=possum, aes(x=hdlngth,y=skullw))
+possum.plot3 <- ggplot(data=possum, aes(x=hdlngth,y=taill))
+
+library(gridExtra)
+
+p1 <- possum.plot1 + geom_point() +
+  xlab("Head length (mm)") + ylab("Total length (cm)")
+p2 <- possum.plot2 + geom_point() +
+  xlab("Head length (mm)") + ylab("Skull width (mm)")
+p3 <- possum.plot3 + geom_point() +
+  xlab("Head length (mm)") + ylab("Tail length (cm)")
+
+grid.arrange(p1,p2,p3,nrow=2)
+```
+
+Looking at the scatter of the points, there's very clear relationship between head length and skull width. We could draw an imaginary line through the data (in later topics we'll show you how to do this). This is not surprising; we're taking measurements from the same end of the possum, possums with 'bigger' heads have both longer and wider heads. Nevertheless, the relationship isn't perfect; we wouldn't be able to predict exactly the width of a possum skull if we only knew its length; some possums have slightly narrower or wider heads relative to their length.
+
+For head length versus total length, there is a bit more scatter in the points but one can still probably see that there's a correlation; possums that are longer in overall body length also tend to have longer heads. The relationship between head length and tail length is much less clear because there is a lot scatter in the points. (The only thing by eye that suggests that there might be a relationship is that we don't see any points in the top left of bottom right parts of the plot).
+
+Correlation is the extent to which points scatter around a line. Less scatter means a higher correlation (like skull width versus head length), more scatter means a lower correlation (like head length versus tail length). A correlation can take a value between -1 and 1. A correlation ($r$) of $r=1$ means a perfect, positive correlation; as $x$ increases, so does $y$ and in a perfectly predicatable way. A correlation of $r=0$ means there is no correlation ($x$ and $y$ completely uncorrelated). Negative values ($r<0$) means that as $x$ increases, $y$ decreases.
+
+It's easy to both work out the correlation in R and to statistically test it using the functions `cor` and `cor.test`.
+
+To just get the correlation between head length and skull width, use `cor`:
+
+```{r}
+cor(possum$hdlngth, possum$skullw) 
+#note that we use dataframe$variable to specify the variables we're interested in
+```
+
+To test statistically whether there is a correlation between two variables is just `cor.test`, which gives the correlation plus a statistical test.
+
+```{r}
+cor.test(possum$hdlngth, possum$skullw)
+```
+
+Here the null hypothesis is that the two variables are uncorrelated and that the pattern we see arose by chance. The p-value, however, is extremely small (p \< 0.001) and so we reject the null hypothesis. Head length and skull width are correlated and cor.test also gives 95% confidence limits (0.74 - 0.87, the range within which, is you ran the study again, 95% of the values for $r$ would be) around the estimate of 0.82.
+
+> Calculate the correlation for head length versus total length and head length versus tail length. How do these values relate to the scatter of points you saw on the graphs?
+
+> Can you work out what the code `cor(possum[,c("hdlngth","totlngth","skullw","taill")])` does?
+
+```{r, include = FALSE}
+cor(possum$hdlngth, possum$totlngth)
+cor(possum$hdlngth, possum$taill)
+
+cor.test(possum$hdlngth, possum$totlngth)
+cor.test(possum$hdlngth, possum$taill)
+
+cor(possum[,c("hdlngth","totlngth","skullw","taill")])
+
+```
+
+### Exercises
+
+#### Exercise 3
+
+> The “iris” data set (already loaded on *R*) contains sepal lengths (cm) and petal lengths (cm) of three different iris species. We would like to determine whether iris petal length is related to iris sepal length.
+>
+> 1.  Produce a plot of the data to publication standard using ggplot2.
+> 2.  Subset the data for the three different iris species. Use the same approach as used at the beginning of this topic.
+> 3.  For each species, state the null and alternative hypotheses and conduct a correlation test to determine whether iris petal length is related to iris sepal length. Is the result consistent across species?
+
+## Contingency tables: Chi-square test
+
+The last type of statistical test that we'll consider here is a Chi-square test. These are used where you have categorical variables and often a set of outcomes (contingencies). The simplest example is a 2x2 contingency table.
+
+Let's imagine an experiment where plants of each of 2 genotypes of barley were all exposed to a virus within a controlled experiment. The virus was able to infect some plants but not others, as shown below.
+
+| Barley genotype | Infected | Uninfected |
+|:----------------|:---------|:-----------|
+| Samson          | 40       | 10         |
+| Delilah         | 32       | 28         |
+
+Let's do a Chi-square by hand to understand how it works (or to remind ourselves if we've done this in a previous course). We can start by summing the rows and the columns.
+
+| Barley genotype | Infected | Uninfected | Sum   |
+|:----------------|:---------|:-----------|:------|
+| Samson          | 40       | 10         | *50*  |
+| Delilah         | 32       | 28         | *60*  |
+| **Sum**         | *72*     | *38*       | *110* |
+
+In the experiment as a whole, the proportion of plants that were Samsom genotype was $50/110 = 0.455$ and of Delilah genotype was $60/110 = 0.545$.
+
+The proportion of infected plants in the whole experiment was $72/110 = 0.655$ and of uninfected plants was $38/110 = 0.345$. For the null hypothesis (that there is no effect of genotype on risk of being infected) we'd say that the probability of a plant getting infected is 0.655 regardless of genotype. So what numbers would we expect if that were true?
+
+The proportion of Samson genotypes is 0.455 and the proportion of plants infected is 0.655, so we expect the proportion of infected, Samson genotype plants to be $0.455*0.655=0.298$. Given 110 plants in the experiment, the number of infected, Samson genotype plants we'd expect would be $0.298 * 110 = 32.72$. The number of uninfected Samson genotype plants would be $0.455*0.345*110 = 17.28$. We can calculate the expected number of infected and uninfected Delilah genotypes in a similar way given their proportion of 0.545. The expected numbers of plants in each category under the null hypothesis is:
+
+**Expected numbers**
+
+| Barley genotype | Infected | Uninfected | Sum   |
+|:----------------|:---------|:-----------|:------|
+| Samson          | 32.72    | 17.28      | *50*  |
+| Delilah         | 39.28    | 20.72      | *60*  |
+| **Sum**         | *72*     | *38*       | *110* |
+
+We then ask what the difference is between the observed and expected numbers. The greater the difference, the more likely it is that we can reject the null hypothesis. We do this by calculating the square of the observed - expected and dividing by the expected for each cell, i.e. $\frac{(O_{i}-E_{i})^2}{E_{i}}$
+
+| Barley genotype | Infected                             | Uninfected                           |
+|:-----------------|:--------------------------|:--------------------------|
+| Samson          | $\frac{(40-32.72)^{2}}{32.72}=1.619$ | $\frac{(10-17.28)^{2}}{17.28}=3.068$ |
+| Delilah         | $\frac{(32-39.28)^{2}}{39.28}=1.350$ | $\frac{(28-20.72)^{2}}{20.72}=2.558$ |
+
+Then we sum over all the cells to get the Chi-square value $$ \chi^{2}=1.619+1.350+3.068+2.558=8.595 $$The degrees of freedom for a row x column contingency table like this is $df=(rows - 1)*(columns-1)$, i.e. $df=1$ for a 2 x 2 contingency table. So you would then turn to the back of a statistics text book and read off the critical values of a chi-square distribution with 1 d.f. and see that 8.595 lies between $0.001 < p < 0.01$ (which you would just report as p\<0.01). In terms of biology, you would also notice that we expect 20.72 uninfected Delilah plants but we observe 28; thus, the Delilah genotype seems more resistant to the virus than Samson.
+
+![](images/chi_dist-01.jpg)
+
+(This is from the textbook I had as a student.)
+
+All of these calculations are quite long-winded, and while its useful to see how the Chi-square test works, if we're doing things by pen and paper we're likely to make mistakes.
+
+Let's see how we would do this same test in R. The file barley.csv contains the data.
+
+```{r}
+barley <- read.csv("barley.csv")
+head(barley)
+nrow(barley)
+```
+
+We can use `table` to create a contingency table of genotype x infection status
+
+```{r}
+table(barley$genotype,barley$status)
+```
+
+To run a Chi-square test, we can use `chisq.test` in a similar way to the `cor.test` by entering the two variables we're interested in.
+
+```{r}
+chisq.test(barley$genotype,barley$status)
+```
+
+You'll see that this gives a slightly different value of Chi-square than we calculated (7.438 vs 8.595), which is because it uses a correction for small sample sizes (the Yates' continuity correction) which is more conservative but still gives p \< 0.01 for these data. You can also produce the 'raw' Chi-square value as we've done using `chisq.test(barley$genotype,barley$status, correct=FALSE)`, which (give or take a little rounding error) gives the same value that we found.
+
+### Exercises
+
+#### Exercise 4
+
+> A biologist is interested in a bacterium which can protect insects from parasite infection. Specifically, they want to understand whether the bacterium, *Spiroplasma*, can protect fruit flies against trypanosomatid infection. Evidence from the lab suggests that they do. However, they would like to determine whether there is evidence of this from wild populations. To do this, a sample of flies were collected from the wild and screened for *Spiroplasma* infection and trypanosomatid infection using PCR.
+>
+> Read in the “pcrscreen.csv” file. The data set contains the results from the PCR screen for *Spiroplasma* infection and trypanosomatid infection of individual fruit flies. Check over the data to ensure it has been read into R correctly.
+>
+> 1.  Create and name a contingency table of *Spiroplasma* infection status x trypanosomatid infection status.
+> 2.  Using the code `mosaicplot(Insert_your_table_name_here)`, create a plot of the contingency table. Would you predict there to be a relationship between *Spiroplasma* infection and trypanosomatid infection in fruit flies from the plot (does *Spiroplasma* protect against trypanosomatid infection)? Why do you predict this?
+> 3.  State the null and alternative hypothesis and conduct a Chi-square test. Was your prediction correct?

@@ -67,9 +67,11 @@ Let's start by working out the square root of 16. In the R script file in the to
 sqrt(16)
 ```
 
-```
+:::{dropdown} Show expected output
+```text
 ## [1] 4
 ```
+:::
 
 It gives you the answer 4. Here the function `sqrt()` gives the square root and is applied to the object 16
 
@@ -87,9 +89,11 @@ Type `y` into the console and it should return its value, 4.
 y
 ```
 
-```
+:::{dropdown} Show expected output
+```text
 ## [1] 4
 ```
+:::
 
 This is a very typical structure for a line of R code, where we apply a function to an object and save the result to a new object in the general form:
 
@@ -103,9 +107,11 @@ x <- c(1,2,3,4,5,6,7,8)
 sqrt(x)
 ```
 
-```
+:::{dropdown} Show expected output
+```text
 ## [1] 1.000000 1.414214 1.732051 2.000000 2.236068 2.449490 2.645751 2.828427
 ```
+:::
 
 Here x is a vector and the function acts on every element of the vector to produce another vector.
 
@@ -120,25 +126,31 @@ Now try the following commands:
 log(x=10) #a single value
 ```
 
-```
+:::{dropdown} Show expected output
+```text
 ## [1] 2.302585
 ```
+:::
 
 ``` r
 log(10)   #if you don't specify x=... R will assume the first object it sees in the function is x
 ```
 
-```
+:::{dropdown} Show expected output
+```text
 ## [1] 2.302585
 ```
+:::
 
 ``` r
 log(c(10,100))
 ```
 
-```
+:::{dropdown} Show expected output
+```text
 ## [1] 2.302585 4.605170
 ```
+:::
 
 Here x is put in as either a single value, 10, or as a vector `c(10,100)` containing 10 and 100. But why is the log of 10 equal to 2.3? By default, it gives natural logs. To get logarithms in base 10, we need to add an extra *argument* to the `log()` function, `base=10`, as below:
 
@@ -147,9 +159,11 @@ Here x is put in as either a single value, 10, or as a vector `c(10,100)` contai
 log(c(10,100),base=10)
 ```
 
-```
+:::{dropdown} Show expected output
+```text
 ## [1] 1 2
 ```
+:::
 
 A function will return an object that can be passed to another function. In `log(sqrt(16))`, for example, `sqrt(16)` is evaluated first, then the answer, 4, is passed to `log()` to give the natural log of 4.
 
@@ -168,9 +182,11 @@ Note that what's printed on the screen is given to a limited number of significa
 exp(1.386294)
 ```
 
-```
+:::{dropdown} Show expected output
+```text
 ## [1] 3.999999
 ```
+:::
 
 What's stored in the workspace is more accurate
 
@@ -180,9 +196,11 @@ y <- log(4)
 exp(y)
 ```
 
-```
+:::{dropdown} Show expected output
+```text
 ## [1] 4
 ```
+:::
 
 ## Errors part 1/n
 
@@ -216,7 +234,8 @@ data(iris) #iris should now appear in the environment frame
 head(iris) #prints first 6 lines
 ```
 
-```
+:::{dropdown} Show expected output
+```text
 ##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ## 1          5.1         3.5          1.4         0.2  setosa
 ## 2          4.9         3.0          1.4         0.2  setosa
@@ -225,27 +244,30 @@ head(iris) #prints first 6 lines
 ## 5          5.0         3.6          1.4         0.2  setosa
 ## 6          5.4         3.9          1.7         0.4  setosa
 ```
+:::
 
 ``` r
-summary(iris) #gives a summary of the data, including minimum and maximum values, mean and median, and 1st and 3rd quartiles
+summary(iris) #gives a summary of the data; minimum and maximum values, mean and median, and 1st and 3rd quartiles
 ```
 
+:::{dropdown} Show expected output
+```text
+##   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width
+##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100
+##  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300
+##  Median :5.800   Median :3.000   Median :4.350   Median :1.300
+##  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199
+##  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800
+##  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500
+##        Species
+##  setosa    :50
+##  versicolor:50
+##  virginica :50
+##
+##
+##
 ```
-##   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
-##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
-##  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
-##  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
-##  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
-##  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
-##  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
-##        Species  
-##  setosa    :50  
-##  versicolor:50  
-##  virginica :50  
-##                 
-##                 
-## 
-```
+:::
 
 Within RStudio, you also type `View(iris)` in the console and see the whole iris dataset in a viewer a bit like Excel.
 
@@ -306,7 +328,7 @@ Then read in <a href="/data/topic-1-getting-started/DissolvedO2.txt?download=1">
 
 
 ``` r
-disox<-read.table("DissolvedO2.txt", header=TRUE) 
+disox<-read.table("DissolvedO2.txt", header=TRUE)
 #The argument header=TRUE is used to say that the first row of the file has the names of the fields
 ```
 
@@ -318,8 +340,8 @@ Always check the file reads in as you expect it to.
 
 
 ``` r
-head(disox)    #This prints the first few lines of data you've read in. 
-summary(disox) #This gives some summary statistics. 
+head(disox)    #This prints the first few lines of data you've read in.
+summary(disox) #This gives some summary statistics.
 View(disox) #opens the dataframe in a viewer in RStudio
 ```
 
@@ -433,7 +455,7 @@ This walkthrough demonstrates the Topic 1 code and how to run it in RStudio.
 This walkthrough supports the Topic 1 exercises.
 
 <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 2rem;">
-  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=2ef1e42a-417c-4bbf-a784-b1a8008cb244&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Topic_1_exercises_walkthrough"></iframe>
+	<iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=4dbcd506-ccec-4c09-89ab-b1a800a65e9f&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Topic_1_exercise_video"></iframe>
 </div>
 
 ## Getting help

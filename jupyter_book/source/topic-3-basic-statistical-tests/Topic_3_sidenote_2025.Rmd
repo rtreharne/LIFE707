@@ -1,0 +1,134 @@
+---
+title: "LIFE707 Topic 3 Sidenote"
+author: "Steve Paterson"
+date: "2025-08-08"
+output: html_document
+---
+
+```{r include=FALSE}
+wkdir <- "/Users/stevep11/Library/CloudStorage/Dropbox/teaching/LIFE707/LIFE707_25_26/Topics/Topic3"
+
+knitr::opts_chunk$set(echo = TRUE, root.dir = wkdir)
+
+setwd(wkdir)
+```
+
+This is written as a 'sidenote', i.e. optional. You can either look at now, skip this entirely, or come back as you gain confidence in R and have data from your project to analyse.
+
+In topic 3 we've picked 3 common statistical tests to get you started and that represent enough material for a topic. Here I give a few extensions to these that you may come across in papers that you read or that you've used in previous courses. You can check the help pages for any of the functions here.
+
+```{r, include = FALSE, message = FALSE}
+library(tidyverse)
+```
+
+
+## Paired t-test
+
+In the main topic, I gave the example of two separate groups of individuals --positive or negative for a diabetes test-- and we compared the glucose levels between these two groups. In some cases though you have _paired_ observations. An example might be where you make two observations on the same individual; say on two parts of their body or before and after some treatment. Here it is more proper to account for the variation among individuals and reduce Type I and Type II Errors.
+
+Find the spider example from Topic 1 and load it up again. 
+
+```{r}
+spider <- read.table("spider.txt",header=TRUE)
+head(spider)
+```
+
+Here we have data on speed of spiders before and after their pedipalps are removed. Each row is an individual. Running a paired t-test is easy so long as we give values for speed.before and speed.after with the spiders in the same order. We then just specify `paired=TRUE` and `t.test` does the rest (otherwise the default is `paired=FALSE`, i.e. that you have two different sets of spiders).
+
+```{r}
+t.test(spider$speed.before,spider$speed.after, paired=TRUE)
+```
+
+
+## Wilcoxon rank sum test
+
+(You may also see this referred to as a Mann-Whitney U test.)
+
+The t-test is a parametric test. It makes the assumption that the data within each group are normally distributed. This assumption gives parametric tests like t-tests a lot of power to detect significant effects but these assumptions can come with a cost of Type I errors (falsely rejecting the null hypothesis).  Of course, real data doesn't come from a statistics equation and is never truly normal. Often it's close enough, however, and t-tests are actually pretty robust to a bit of non-normality in the data. In particular, where sample sizes increase (above maybe 30 per group), the effect of a bit of non-normality on a t-test matters less and its conclusions remain pretty robust (due to central limit theorem, or the law of large numbers).
+
+If though, you have data that is wildly different from normal (and you can't transform it, as discussed in later topics), you can use a rank test (a non-parametric test). Essentially, rather than take the values themselves, you take all the values from your study and put them into a ranked list and then ask whether you tend to find values with a higher rank in one group than the other. However, turning real values into ranks means that you're losing information and so non-parametric tests come with a cost; they can have less power to detect true effects.
+
+```{r, include=FALSE}
+#commented out to be doubly sure that file not over-written
+#if(!file.exists("gamma_data.txt")){
+  
+#  write.table(data.frame(Trt=rep(c("A","B"),each=50),traitX=c(rgamma(50,2,0.5),1.5*rgamma(50,2,0.5))),
+#              file="gamma_data.txt", quote=FALSE,col.names=TRUE,row.names = FALSE,sep="\t")
+#}
+```
+
+There are data in the file gamma_data.txt on 'traitX' in groups A and B. (I've made the data up for this example but you could imagine it's the concentration of a molecule in the blood in two groups of patients.)
+
+```{r}
+gamma <- read.table("gamma_data.txt", header = TRUE)
+```
+
+Plot these out
+
+```{r, message = FALSE}
+gamma1 <- ggplot(gamma, aes(x=traitX, group=Trt))
+gamma1 + geom_histogram(bins=20) + facet_wrap(~ Trt)
+```
+```{r}
+A <- subset(gamma, Trt == "A")
+B <- subset(gamma, Trt == "B")
+
+mean(A$traitX)
+mean(B$traitX)
+
+```
+
+
+Maybe there's a shift of group B to the right, but the data don't have a normal distribution. We can use the function `wilcox.test` instead of `t.test`.
+
+```{r}
+wilcox.test(traitX ~ Trt, data=gamma)
+
+# An equivalent is 
+# wilcox.test(A$traitX, B$traitX)
+
+```
+
+Compare this with a t test.
+```{r}
+t.test(traitX ~ Trt, data=gamma)
+```
+
+Here the mean of group B may be pulled up by two high values and so the t-test gives a (just) significant value and the Wilcoxon rank sum test is not quite significant. The Wilcoxon rank sum test is more conservative here, so we would report this and say that we couldn't show a difference. Only more data could really decide whether there was a difference between the two groups or not.
+
+## Spearman rank correlation test
+
+By the same principle, if one wanted to use the ranks of a set of values, rather than the values themselves, one could use a Spearman Rank Correlation Test. We just need to specify `method="spearman"` in `cor.test`. Eg.
+
+```{r, include = FALSE}
+possum <- read.csv("possum.csv")
+
+```
+
+```{r}
+cor.test(possum$hdlngth, possum$skullw, method="spearman")
+```
+
+(Though, in the case of the possums, there's a lot of data and it looks normal, so there's no need to use a rank sum test. This is just shown here so you can see what the code would be.)
+
+## Fisher exact test
+
+This is an alternative to a Chi-squared test, but for small sets of data gives an exact value and can be useful where you have a table with some cells with small numbers in them or where a p-value for a Chi-square test comes at just under 0.05 and you want to be more conservative/cautious in what you call as significant.
+
+```{r, include = FALSE}
+barley <- read.csv("barley.csv")
+```
+
+
+```{r}
+table(barley$genotype,barley$status)
+```
+
+```{r}
+chisq.test(barley$genotype,barley$status)
+```
+
+```{r}
+fisher.test(barley$genotype,barley$status)
+```
+
