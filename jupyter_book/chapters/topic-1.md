@@ -323,7 +323,7 @@ dir()     #should return list of files in your directory, including "DissolvedO2
 Then read in <a href="/data/topic-1-getting-started/DissolvedO2.txt?download=1">DissolvedO2.txt</a>. The video below can help with importing data into R. This is where many of the error messages arise when students first try to use R and you may have to try a few times.
 
 <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 2rem;">
-  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=0c279e25-61b0-4f7b-abd8-b4cf00889ad8&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="load_data-4c2e6914c577b7bee51ec2e908cb0d62"></iframe>
+  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=0c279e25-61b0-4f7b-abd8-b4cf00889ad8&amp;autoplay=false&amp;offerviewer=false&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="load_data-4c2e6914c577b7bee51ec2e908cb0d62"></iframe>
 </div>
 
 
@@ -449,13 +449,13 @@ We will introduce statistical tests for this question in later topics.
 This walkthrough demonstrates the Topic 1 code and how to run it in RStudio.
 
 <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 2rem;">
-  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=2ef1e42a-417c-4bbf-a784-b1a8008cb244&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Topic_1_code_runthrough"></iframe>
+  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=2ef1e42a-417c-4bbf-a784-b1a8008cb244&amp;autoplay=false&amp;offerviewer=false&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Topic_1_code_runthrough"></iframe>
 </div>
 
 This walkthrough supports the Topic 1 exercises.
 
 <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 2rem;">
-	<iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=4dbcd506-ccec-4c09-89ab-b1a800a65e9f&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Topic_1_exercise_video"></iframe>
+	<iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=4dbcd506-ccec-4c09-89ab-b1a800a65e9f&autoplay=false&offerviewer=false&showtitle=true&showbrand=true&captions=true&interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Topic_1_exercise_video"></iframe>
 </div>
 
 ## Getting help

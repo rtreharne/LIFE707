@@ -476,7 +476,7 @@ This captioned walkthrough demonstrates the Topic 2 code and how to create
 the plots in RStudio.
 
 <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 2rem;">
-  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=6be71cd5-d954-426b-85cf-b1ab00d772a9&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Topic 2 code run through"></iframe>
+  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=6be71cd5-d954-426b-85cf-b1ab00d772a9&amp;autoplay=false&amp;offerviewer=false&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Topic 2 code run through"></iframe>
 </div>
 
 ## Exercise solutions

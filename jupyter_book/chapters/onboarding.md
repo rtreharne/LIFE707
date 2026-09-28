@@ -19,7 +19,7 @@ course's teaching team and your classmates, pausing it when you need to
 complete a step.
 
 <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 2rem;">
-  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=5ad42c9f-1f00-4a0d-a3b1-b4cf00925327&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="R Studio Environment"></iframe>
+  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=5ad42c9f-1f00-4a0d-a3b1-b4cf00925327&amp;autoplay=false&amp;offerviewer=false&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="R Studio Environment"></iframe>
 </div>
 
 ## Set up your LIFE707 folders

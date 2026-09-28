@@ -33,7 +33,7 @@ preparation for choosing, running, and interpreting the tests that follow.
 :::
 
 <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 2rem;">
-  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=759c31d9-7dfa-45a4-b541-b1d300a24c95&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Basic statistical tests"></iframe>
+  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=759c31d9-7dfa-45a4-b541-b1d300a24c95&amp;autoplay=false&amp;offerviewer=false&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Basic statistical tests"></iframe>
 </div>
 
 ## Files for this week
@@ -675,23 +675,23 @@ when you are stuck.
 **t-test code walkthrough**
 
 <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 2rem;">
-  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=d3db01c7-3eb7-4f37-9942-b1f100ee2ec5&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="t test code run through"></iframe>
+  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=d3db01c7-3eb7-4f37-9942-b1f100ee2ec5&amp;autoplay=false&amp;offerviewer=false&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="t test code run through"></iframe>
 </div>
 
 **Correlation-test code walkthrough**
 
 <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 2rem;">
-  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=bb039c05-7b9d-4b3c-8ab5-b1f100f73a59&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Correlations code run through"></iframe>
+  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=bb039c05-7b9d-4b3c-8ab5-b1f100f73a59&amp;autoplay=false&amp;offerviewer=false&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Correlations code run through"></iframe>
 </div>
 
 **Chi-square-test code walkthrough**
 
 <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 2rem;">
-  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=d646bd53-0f12-4277-977f-b1f100fc5769&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="final_cor_code"></iframe>
+  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=d646bd53-0f12-4277-977f-b1f100fc5769&amp;autoplay=false&amp;offerviewer=false&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="final_cor_code"></iframe>
 </div>
 
 <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 2rem;">
-  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=67b22c6f-8f05-4320-8e82-b1d300ccbcde&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Topic 3 Exercise answers - video"></iframe>
+  <iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=67b22c6f-8f05-4320-8e82-b1d300ccbcde&amp;autoplay=false&amp;offerviewer=false&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Topic 3 Exercise answers - video"></iframe>
 </div>
 
 ## Getting help
