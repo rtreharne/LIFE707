@@ -11,6 +11,7 @@ project:
   toc:
     - file: index.md
     - file: chapters/onboarding.md
+    - file: chapters/gai.md
     - file: chapters/topic-1.md
     - file: chapters/topic-2.md
     - file: chapters/topic-3.md

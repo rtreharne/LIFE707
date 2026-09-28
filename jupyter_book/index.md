@@ -62,8 +62,10 @@ drop-in session.
 ## Start here
 
 1. Complete [Onboarding](chapters/onboarding.md) before your first workshop.
-2. Continue to [Topic 1: Getting Started](chapters/topic-1.md).
-3. Keep your `LIFE707` folder and R scripts organised as you work through each
+2. Read [Using Generative Artificial Intelligence (GAI)](chapters/gai.md)
+   before starting Topic 1.
+3. Continue to [Topic 1: Getting Started](chapters/topic-1.md).
+4. Keep your `LIFE707` folder and R scripts organised as you work through each
    topic.
 
 ## Assessment information
