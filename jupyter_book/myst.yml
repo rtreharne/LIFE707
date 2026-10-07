@@ -15,6 +15,7 @@ project:
     - file: chapters/topic-1.md
     - file: chapters/topic-2.md
     - file: chapters/topic-3.md
+    - file: chapters/topic-4.md
 site:
   template: book-theme
   parts:
