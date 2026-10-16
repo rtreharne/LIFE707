@@ -18,5 +18,5 @@ nine-digit student ID.
 
 <iframe src="../../data/cycle-1/downloader.html" title="Cycle 1 personal dataset downloader" style="display:block;width:100%;max-width:50rem;height:19rem;border:0;margin:1.5rem 0;" aria-label="Cycle 1 personal dataset downloader"></iframe>
 
-```{include} ../../assessment/cycle-1/LIFE707_cycle_1_coursework_brief.md
+```{include} includes/cycle-1-coursework-brief.md
 ```

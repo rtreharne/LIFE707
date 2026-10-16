@@ -22,10 +22,10 @@ TOPIC_1_MODULE = "Topic 1 - Getting Started"
 TOPIC_1_RMD = "Topic_1_sep.Rmd"
 TOPIC_1_EXCLUDED_FILES = {"Topic_1_exercise_answers.Rmd", "Topic_1_exercise_answers.html"}
 EDITABLE_TOPIC_1 = BOOK / "chapters" / "topic-1.md"
-CYCLE_1_MASTER_DATA = {
-    "vaccine_immunology_master.csv": ROOT / "assessment" / "cycle-1" / "LIFE707_607" / "1. Draft (MAIN and RESIT)" / "vaccine_immunology_master.csv",
-    "bean_ecophysiology_master.csv": ROOT / "assessment" / "cycle-1" / "LIFE707_607" / "1. Draft (MAIN and RESIT)" / "bean_ecophysiology_master.csv",
-}
+CYCLE_1_MASTER_DATA = (
+    DATA / "cycle-1" / "vaccine_immunology_master.csv",
+    DATA / "cycle-1" / "bean_ecophysiology_master.csv",
+)
 
 
 def load_env():
@@ -279,17 +279,12 @@ def make_book(rendered):
 
 
 def build():
-    # The Cycle 1 downloader runs entirely in the student's browser.  Copy the
-    # approved masters into the static book data directory at build time rather
-    # than maintaining duplicate 1 MB source files in the repository.
-    cycle_1_data = DATA / "cycle-1"
-    cycle_1_data.mkdir(parents=True, exist_ok=True)
-    for filename, source in CYCLE_1_MASTER_DATA.items():
+    # The Cycle 1 downloader runs entirely in the student's browser. Its public
+    # master CSVs are static book assets so a fresh GitHub Pages checkout can
+    # build without the locally managed assessment directory.
+    for source in CYCLE_1_MASTER_DATA:
         if not source.exists():
             raise RuntimeError(f"Cycle 1 master data file is missing: {source}")
-        destination = cycle_1_data / filename
-        if not destination.exists() or destination.read_bytes() != source.read_bytes():
-            shutil.copy2(source, destination)
     environment = {**os.environ, "JB_ALLOW_NODEENV": "yes"}
     subprocess.run([str(ROOT / ".venv" / "bin" / "jupyter"), "book", "build", "--html", "--strict"], check=True, cwd=BOOK, env=environment)
 
