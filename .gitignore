@@ -22,3 +22,6 @@ jupyter_book/__pycache__/
 jupyter_book/content/
 jupyter_book/canvas_inventory.json
 jupyter_book/data_manifest.json
+
+# Assessment materials are managed locally and must not be added as new files.
+/assessment/
