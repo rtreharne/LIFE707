@@ -1,0 +1,144 @@
+{
+  "schema_version": "canvas-rubric-draft/v1",
+  "status": "draft_for_review_before_canvas_creation",
+  "rubric_title": "LIFE707 Methods and Results Report Rubric",
+  "total_points": 100,
+  "source": {
+    "file": "LIFE707_607/1. Draft (MAIN and RESIT)/SoBS_Methods_Results_Rubric.pdf",
+    "source_rubric_title": "BIOS103 Methods and Results Assessment Rubric",
+    "translation_note": "This is a structured Level 7 adaptation of the source PDF. It is not a Canvas export and has not been uploaded to Canvas."
+  },
+  "level_and_marking": {
+    "fheq_level": 7,
+    "institution": "University of Liverpool",
+    "module_pass_mark_percent": 50,
+    "banding_note": "The source's 'Adequate' rating scored 45% for every scored criterion. At Level 7 this is below the 50% pass mark, so it is renamed 'Borderline Fail'. A distinct 50% 'Pass' rating has been added."
+  },
+  "canvas_import_mapping": {
+    "api_shape": "Create each entry in criteria as a Canvas rubric criterion; create each ratings entry as a rating for that criterion. Preserve points and description. Post-mark adjustments require an agreed workflow because zero-point Canvas rows do not automatically deduct a percentage.",
+    "criterion_use_range": false,
+    "free_form_criterion_comments": true
+  },
+  "criteria": [
+    {
+      "key": "experimental_methods",
+      "description": "Experimental methods",
+      "long_description": "Assesses the description of experimental design and practical steps, including the information needed to understand and repeat the work.",
+      "points": 25,
+      "ratings": [
+        {"label": "Exceptional", "points": 25, "description": "At the highest standard; this level should be extremely rare."},
+        {"label": "Outstanding", "points": 21.25, "description": "Exceptionally clear, accurate and concise account of design and procedure. Identifies relevant samples, groups, controls, replication, materials and conditions; the work can be repeated."},
+        {"label": "Excellent", "points": 18.75, "description": "Clear, accurate and well-organised account. Includes nearly all relevant design details and can be repeated with very few uncertainties."},
+        {"label": "Very Good", "points": 16.25, "description": "Clearly describes design and main procedural steps; most relevant details are included, with only minor omissions or unnecessary detail."},
+        {"label": "Good", "points": 13.75, "description": "Describes main steps, but important design, control, replication, material or condition details are missing or unclear. Parts would require assumptions to repeat."},
+        {"label": "Pass", "points": 12.5, "description": "Provides a basically accurate and usable account of the design and procedure. Core steps and enough information to understand the work are present, but important detail, rationale or reproducibility is limited."},
+        {"label": "Borderline Fail", "points": 11.25, "description": "Basic account of the procedure, but several details needed to understand design or repeat the work are missing or unclear. May include irrelevant detail or errors."},
+        {"label": "Marginal Fail", "points": 8.75, "description": "Incomplete or confusing account. Important design features and procedural details are absent or inaccurate, making repetition difficult."},
+        {"label": "Fail", "points": 5, "description": "Very little usable description; major steps or design features are missing or seriously inaccurate, so the work could not be repeated."},
+        {"label": "Absent", "points": 0, "description": "No assessable description of the experimental methods."}
+      ]
+    },
+    {
+      "key": "data_processing_analysis",
+      "description": "Data processing and analysis methods",
+      "long_description": "Assesses the description and critical justification of data organisation, processing, calculations, statistical analysis, assumptions and software.",
+      "points": 20,
+      "ratings": [
+        {"label": "Exceptional", "points": 20, "description": "At the highest standard; this level should be extremely rare."},
+        {"label": "Outstanding", "points": 17, "description": "Precise, complete and reproducible account of processing and analysis. Identifies calculations, summary statistics, exclusions or transformations, test/model, assumptions and software; choices are appropriate and critically justified."},
+        {"label": "Excellent", "points": 15, "description": "Clear and comprehensive account. Identifies main calculations, statistics, exclusions or transformations, test/model and software; assumptions and analytical choices are accurate with only minor omissions."},
+        {"label": "Very Good", "points": 13, "description": "Clearly describes main processing and analysis steps including principal calculations, statistics, test/model and software. Most relevant assumptions are addressed; a few details may be missing."},
+        {"label": "Good", "points": 11, "description": "Describes the general workflow but omits some important details of calculations, processing, exclusions, test/model, assumptions or software. Some choices may be insufficiently explained or contain minor errors."},
+        {"label": "Pass", "points": 10, "description": "Provides a basically correct account of the core processing and analysis. Key choices are named, but their rationale, assumptions, reproducibility or limitations are only partly addressed."},
+        {"label": "Borderline Fail", "points": 9, "description": "Basic analysis outline, but several steps are unclear or missing. Important information about processing, calculations, statistical method, assumptions or software is incomplete or may contain errors."},
+        {"label": "Marginal Fail", "points": 7, "description": "Analysis methods are incomplete or difficult to follow. Key processing steps or statistical methods are omitted or inappropriate, and errors undermine reproducibility."},
+        {"label": "Fail", "points": 4, "description": "Very little usable description of processing or analysis; major methods are missing or seriously incorrect."},
+        {"label": "Absent", "points": 0, "description": "No assessable description of processing or analysis methods."}
+      ]
+    },
+    {
+      "key": "figures",
+      "description": "Figures",
+      "long_description": "At least two distinct figures are required. Assess relevance, accuracy, clarity and compliance with the specified figure guidance: labelled axes and units where relevant; no chart title; sequential numbering; and a descriptive caption below defining relevant symbols, variables and units.",
+      "points": 30,
+      "ratings": [
+        {"label": "Exceptional", "points": 30, "description": "At the highest standard; this level should be extremely rare."},
+        {"label": "Outstanding", "points": 25.5, "description": "At least two distinct, relevant and accurate figures. Each is clear and legible, correctly labelled, numbered and captioned; captions are self-contained and support interpretation."},
+        {"label": "Excellent", "points": 22.5, "description": "At least two relevant and accurate figures. They are clear, appropriately labelled and correctly placed, numbered and captioned, with only very minor lapses."},
+        {"label": "Very Good", "points": 19.5, "description": "At least two useful, mostly accurate and legible figures. Labels, units, numbering and captions are generally appropriate, with a few minor formatting or caption omissions."},
+        {"label": "Good", "points": 16.5, "description": "At least two figures, but one may be weakly chosen, unclear or contain errors. There are noticeable lapses in labels, units, titles, caption position, numbering or caption detail."},
+        {"label": "Pass", "points": 15, "description": "Two usable figures are provided and communicate the main findings, but relevance, accuracy, labelling, captions or formatting need substantial improvement."},
+        {"label": "Borderline Fail", "points": 13.5, "description": "Only one usable figure, or two or more figures with substantial problems in accuracy, legibility or required formatting. Captions or axis labels are incomplete and interpretation is limited."},
+        {"label": "Marginal Fail", "points": 10.5, "description": "One or more figures are unclear, inaccurate or poorly formatted. Required axis information or captions are largely missing, making them difficult to interpret."},
+        {"label": "Fail", "points": 6, "description": "No usable figures, or submitted figures are seriously inaccurate or uninterpretable."},
+        {"label": "Absent", "points": 0, "description": "No figures submitted."}
+      ]
+    },
+    {
+      "key": "summary_table",
+      "description": "Summary table",
+      "long_description": "At least one summary table is required. Assess accuracy and relevance of summary statistics and compliance with the specified table guidance: sequential numbering; descriptive caption above defining relevant symbols, variables and units; and sensible decimal places consistent with measurement precision.",
+      "points": 15,
+      "ratings": [
+        {"label": "Exceptional", "points": 15, "description": "At the highest standard; this level should be extremely rare."},
+        {"label": "Outstanding", "points": 12.75, "description": "Accurate, well-organised table with appropriate descriptive statistics, a sequential number, self-contained caption and suitable decimal precision."},
+        {"label": "Excellent", "points": 11.25, "description": "Accurate table with appropriate statistics. Caption, numbering and presentation enable interpretation, with only minor lapses."},
+        {"label": "Very Good", "points": 9.75, "description": "Mostly accurate and useful table. Caption, number and values are generally appropriate; a few minor details may be missing."},
+        {"label": "Good", "points": 8.25, "description": "A summary table is included, but has errors or omissions in statistics, labels, units or precision. The caption may be vague, incorrectly numbered or incomplete."},
+        {"label": "Pass", "points": 7.5, "description": "A usable table reports the main summary information, but accuracy, statistical appropriateness, labels, caption detail or precision need material improvement."},
+        {"label": "Borderline Fail", "points": 6.75, "description": "A table is present, but is incomplete, difficult to interpret or contains several errors. Caption placement/numbering may be incorrect or missing and precision may be unsuitable."},
+        {"label": "Marginal Fail", "points": 5.25, "description": "Substantially incomplete or inaccurate table, with major problems in summary values, labels or formatting. The caption is absent or does not support interpretation."},
+        {"label": "Fail", "points": 3, "description": "No usable summary table, or the table is seriously inaccurate and uninterpretable."},
+        {"label": "Absent", "points": 0, "description": "No summary table submitted."}
+      ]
+    },
+    {
+      "key": "results_narrative",
+      "description": "Results narrative",
+      "long_description": "Assesses accurate, concise reporting of findings and clear references to figures and the summary table by number.",
+      "points": 10,
+      "ratings": [
+        {"label": "Exceptional", "points": 10, "description": "At the highest standard; this level should be extremely rare."},
+        {"label": "Outstanding", "points": 8.5, "description": "Presents main findings accurately, logically and concisely. Directs the reader to all relevant figures and table by correct number and reports key numerical or statistical outcomes without unsupported claims."},
+        {"label": "Excellent", "points": 7.5, "description": "Presents findings clearly and accurately in logical order. Refers to relevant figures and table by number and reports key outcomes well, with only minor lapses in precision or concision."},
+        {"label": "Very Good", "points": 6.5, "description": "Mostly clear and accurate account of main findings. Refers to most figures and the table by number; may include some unnecessary detail or omit a minor result."},
+        {"label": "Good", "points": 5.5, "description": "Reports several relevant findings, but the narrative may be uneven, contain unnecessary detail, omit some references or include a few inaccuracies or unsupported statements."},
+        {"label": "Pass", "points": 5, "description": "Reports the core findings in a generally accurate and understandable way, but organisation, precision, figure/table signposting or distinction between results and interpretation needs improvement."},
+        {"label": "Borderline Fail", "points": 4.5, "description": "Basic account of findings, but unclear or incomplete in places. Figure/table references may be missing or incorrect and some statements may not match the displayed data."},
+        {"label": "Marginal Fail", "points": 3.5, "description": "Superficial or difficult-to-follow narrative that rarely guides the reader to figures/table and contains errors in describing findings."},
+        {"label": "Fail", "points": 2, "description": "Results narrative is largely absent or seriously inaccurate and incomplete; it does not communicate the findings."},
+        {"label": "Absent", "points": 0, "description": "No assessable results narrative."}
+      ]
+    }
+  ],
+  "non_scoring_rows": [
+    {
+      "key": "gai_declaration",
+      "description": "GAI declaration and permitted use",
+      "points": 0,
+      "statement": "This assessment is Tier 2: contextual support. Generative AI may be used only for the restricted and specified support activities stated in the assessment brief (for example, planning, editing or support tasks). It must not replace the student's own thinking or produce assessed content. Students must declare any GenAI use in line with the assessment brief, including the tool, purpose and how its output was used or checked.",
+      "ratings": [
+        {"label": "No issues", "description": "A GAI declaration is provided with sufficient relevant details where GenAI was used."},
+        {"label": "Declaration needs clarification", "description": "A GAI acknowledgement is provided but contains insufficient relevant detail where GenAI was used. Follow the agreed assessment process before any deduction is applied."},
+        {"label": "No declaration", "description": "No GAI declaration is provided. Apply any agreed local process consistently; a zero-point rubric row cannot itself deduct marks in Canvas."},
+        {"label": "Refer to Academic Integrity Officer", "description": "There is evidence that GenAI was used beyond the stated Tier 2 permission or in a way that may constitute academic misconduct."}
+      ]
+    },
+    {
+      "key": "academic_integrity",
+      "description": "Academic integrity",
+      "points": 0,
+      "ratings": [
+        {"label": "No concerns", "description": "There are no academic-integrity concerns with this assessment."},
+        {"label": "Category 1: Poor academic practice", "description": "If poor academic practice is formally identified, cap the assessment-task mark at 50%, the minimum Level 7 pass grade; give developmental feedback and follow the University process."},
+        {"label": "Refer to Academic Integrity Officer", "description": "Potential Category 2, 3 or 4 concern. Refer and follow the University Academic Integrity Policy; do not determine the outcome solely in the rubric."}
+      ]
+    }
+  ],
+  "pre_canvas_checks": [
+    "Confirm that each criterion maps to the approved LIFE707 module learning outcomes and assessment brief.",
+    "Confirm whether marks may be entered between rating points; if not, retain the explicit 50% Pass ratings to avoid a gap at the Level 7 threshold.",
+    "Agree and document the workflow for any GAI declaration omission or mark adjustment before implementation.",
+    "Have the final rubric approved and moderated under the School's assessment process."
+  ]
+}
