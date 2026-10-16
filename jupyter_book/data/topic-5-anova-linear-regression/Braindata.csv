@@ -1,0 +1,199 @@
+Order,Species,Brain.size,Body.size
+Cetacea,Balaena_mysticetus,2738,79691178.99
+Cetacea,Balaenoptera_acutorostrata,NA,5587093.59
+Cetacea,Balaenoptera_bonaerensis,NA,NA
+Cetacea,Balaenoptera_borealis,4900,22106251.95
+Cetacea,Balaenoptera_edeni,NA,19999999.97
+Cetacea,Balaenoptera_musculus,3636,154321304.5
+Cetacea,Balaenoptera_physalus,7111,47506008.23
+Cetacea,Berardius_arnuxii,NA,7000000.02
+Cetacea,Berardius_bairdii,NA,11380000.04
+Cetacea,Caperea_marginata,NA,31999999.98
+Cetacea,Cephalorhynchus_commersonii,725,72400
+Cetacea,Cephalorhynchus_eutropia,NA,45000
+Cetacea,Cephalorhynchus_heavisidii,763,39999.99
+Cetacea,Cephalorhynchus_hectori,NA,49999.99
+Cetacea,Delphinapterus_leucas,2083,1381640.73
+Cetacea,Delphinus_capensis,NA,NA
+Cetacea,Delphinus_delphis,790,79271.69
+Cetacea,Eschrichtius_robustus,4317,27324024.19
+Cetacea,Eubalaena_australis,NA,22999999.91
+Cetacea,Eubalaena_glacialis,NA,22999999.91
+Cetacea,Eubalaena_japonica,NA,NA
+Cetacea,Feresa_attenuata,NA,170000
+Cetacea,Globicephala_macrorhynchus,2466,725999.99
+Cetacea,Globicephala_melas,2673,8.00E+05
+Cetacea,Grampus_griseus,2551,387500
+Cetacea,Hyperoodon_ampullatus,NA,3393361.08
+Cetacea,Hyperoodon_planifrons,NA,3000000.01
+Cetacea,Indopacetus_pacificus,NA,2200000
+Cetacea,Inia_geoffrensis,622,121430.76
+Cetacea,Kogia_breviceps,1015,431500
+Cetacea,Kogia_sima,622,183066.66
+Cetacea,Lagenodelphis_hosei,NA,164000
+Cetacea,Lagenorhynchus_acutus,1152,186517.55
+Cetacea,Lagenorhynchus_albirostris,1126,186634.86
+Cetacea,Lagenorhynchus_australis,NA,119999.99
+Cetacea,Lagenorhynchus_cruciger,NA,109999.99
+Cetacea,Lagenorhynchus_obliquidens,1144,109694.46
+Cetacea,Lagenorhynchus_obscurus,886,127499.99
+Cetacea,Lipotes_vexillifer,558,112138.32
+Cetacea,Lissodelphis_borealis,1162,113000
+Cetacea,Lissodelphis_peronii,NA,116000
+Cetacea,Megaptera_novaeangliae,6439,30000000.01
+Cetacea,Mesoplodon_bidens,NA,3400000
+Cetacea,Mesoplodon_bowdoini,NA,2599999.99
+Cetacea,Mesoplodon_carlhubbsi,NA,3400000
+Cetacea,Mesoplodon_densirostris,1444,2299999.99
+Cetacea,Mesoplodon_europaeus,2149,5600000.02
+Cetacea,Mesoplodon_ginkgodens,NA,1500000
+Cetacea,Mesoplodon_grayi,NA,2899999.98
+Cetacea,Mesoplodon_hectori,NA,1.00E+06
+Cetacea,Mesoplodon_layardii,NA,1500000
+Cetacea,Mesoplodon_mirus,2355,2099999.99
+Cetacea,Mesoplodon_perrini,NA,NA
+Cetacea,Mesoplodon_peruvianus,NA,NA
+Cetacea,Mesoplodon_stejnegeri,NA,4800000.02
+Cetacea,Mesoplodon_traversii,NA,NA
+Cetacea,Monodon_monoceros,2995,938126.44
+Cetacea,Neophocaena_asiaeorientalis,422,34000
+Cetacea,Neophocaena_phocaenoides,468,32500
+Cetacea,Orcaella_brevirostris,NA,189999.99
+Cetacea,Orcinus_orca,5617,5628758.66
+Cetacea,Peponocephala_electra,NA,206000
+Cetacea,Phocoena_dioptrica,NA,65000
+Cetacea,Phocoena_phocoena,488,52730.93
+Cetacea,Phocoena_sinus,NA,43121.43
+Cetacea,Phocoena_spinipinnis,597,59999.99
+Cetacea,Phocoenoides_dalli,867,106042.53
+Cetacea,Physeter_catodon,8001,14540959.82
+Cetacea,Platanista_gangetica,293,93481.96
+Cetacea,Platanista_minor,164,75990.24
+Cetacea,Pontoporia_blainvillei,221,40499.99
+Cetacea,Pseudorca_crassidens,3512,1360000
+Cetacea,Sotalia_fluviatilis,688,42833.44
+Cetacea,Sousa_chinensis,NA,279999.99
+Cetacea,Sousa_teuszii,NA,99999.99
+Cetacea,Stenella_attenuata,NA,65733.59
+Cetacea,Stenella_clymene,666,86000
+Cetacea,Stenella_coeruleoalba,880,142102.96
+Cetacea,Stenella_frontalis,NA,109999.99
+Cetacea,Stenella_longirostris,660,50500
+Cetacea,Steno_bredanensis,1542,130000
+Cetacea,Tasmacetus_shepherdi,NA,2500000
+Cetacea,Tursiops_aduncus,NA,NA
+Cetacea,Tursiops_truncatus,1603,281040.55
+Cetacea,Ziphius_cavirostris,2004,4774999.99
+Marsupial,Acrobates pygmaeus,0.35,12
+Marsupial,Aepyprymnus rufescens,12.3,2600
+Marsupial,Antechinomys laniger,0.47,25
+Marsupial,Antechinus agilis,0.56,24
+Marsupial,Antechinus flavipes,0.64,45
+Marsupial,Antechinus minimus,0.74,53.5
+Marsupial,Antechinus stuartii,0.76,27.5
+Marsupial,Antechinus subtropicus,0.72,28.5
+Marsupial,Antechinus swainsonii,1.09,53
+Marsupial,Bettongia gaimardi,11.7,1660
+Marsupial,Bettongia lesueur,10.5,1300
+Marsupial,Bettongia penicillata,9.56,1300
+Marsupial,Bettongia tropica,8.92,1200
+Marsupial,Burramys parvus,1,41.5
+Marsupial,Caluromys derbianus,3.4,318
+Marsupial,Caluromys philander,3.5,188.5
+Marsupial,Cercartetus caudatus,0.71,30
+Marsupial,Cercartetus nanus,0.43,24
+Marsupial,Chaeropus ecaudatus,2.4,200
+Marsupial,Dactylopsila trivirgata,5.83,423
+Marsupial,Dasycercus cristicauda,1.24,90
+Marsupial,Dasykaluta rosamondeae,0.54,35
+Marsupial,Dasyuroides byrnei,1.5,110
+Marsupial,Dasyurus geoffroii,5.17,1100
+Marsupial,Dasyurus hallucatus,3.38,525
+Marsupial,Dasyurus maculatus,9.41,5500
+Marsupial,Dasyurus viverrinus,5.33,1090
+Marsupial,Dendrolagus bennettianus,26,10950
+Marsupial,Dendrolagus lumholtzi,26.2,7195
+Marsupial,Didelphis marsupialis,6.35,1620
+Marsupial,Didelphis virginiana,6.72,1900
+Marsupial,Dorcopsis mÅlleri,20.4,3250
+Marsupial,Dromiciops gliroides,0.81,24
+Marsupial,Echymipera rufescens,3.73,1700
+Marsupial,Gymnobelideus leadbeateri,2.85,133
+Marsupial,Hemibelideus lemuroides,3.15,952
+Marsupial,Isoodon macrourus,4.42,1600
+Marsupial,Isoodon obesulus,3.89,775
+Marsupial,Lagorchestes conspicillatus,14,3000
+Marsupial,Lagorchestes hirsutus,7.77,1265
+Marsupial,Lagorchestes leporides,12.6,3000
+Marsupial,Lagostrophus fasciatus,7,1750
+Marsupial,Lasiorhinus latifrons,55.5,26000
+Marsupial,Macropus agilis,33.3,15000
+Marsupial,Macropus antilopinus,56.8,27250
+Marsupial,Macropus dorsalis,29.2,11250
+Marsupial,Macropus eugenii,23.7,6500
+Marsupial,Macropus fuliginosus,58,28850
+Marsupial,Macropus giganteus,69.8,26400
+Marsupial,Macropus greyi,25,19000
+Marsupial,Macropus irma,24.7,8000
+Marsupial,Macropus parma,18.7,4275
+Marsupial,Macropus parryi,41.3,13500
+Marsupial,Macropus robustus,59,21200
+Marsupial,Macropus rufogriseus,36,16200
+Marsupial,Macropus rufus,62.4,46250
+Marsupial,Macrotis lagotis,6.57,1800
+Marsupial,Macrotis leucura,4.3,355.5
+Marsupial,Marmosa madierensis,1.1,45
+Marsupial,Metachirus nudicaudatus,3.5,300
+Marsupial,Monodelphis brevicaudata,0.9,70
+Marsupial,Myrmecobius fasciatus,4.25,471.5
+Marsupial,Ningaui ridei,0.24,8.75
+Marsupial,Ningaui yvonneae,0.26,7.9
+Marsupial,Notoryctes typhlops,0.78,40
+Marsupial,Onychgalea lunata,10.2,3500
+Marsupial,Onychogalea fraenata,14.7,4550
+Marsupial,Onychogalea unguifera,16.7,6650
+Marsupial,Parantechinus apicalis,1.2,69
+Marsupial,Parantechinus bilarni,0.65,27.5
+Marsupial,Perameles bougainvillei,3.21,226
+Marsupial,Perameles gunnii,4.5,750
+Marsupial,Perameles nasuta,4.96,960
+Marsupial,Petauroides volans,4.69,1700
+Marsupial,Petaurus australis,5.71,555
+Marsupial,Petaurus breviceps,2.09,127.5
+Marsupial,Petaurus norfolcensis,3.02,230
+Marsupial,Petrogale assimilis,17.5,4500
+Marsupial,Petrogale concinna,11,1350
+Marsupial,Petrogale penicillata,23.9,7100
+Marsupial,Petrogale xanthopus,23,7500
+Marsupial,Petropseudes dahli,5.038,2000
+Marsupial,Phalanger mimicus,8.9,2000
+Marsupial,Phascogale calura,0.91,51.5
+Marsupial,Phascogale tapoatafa,1.81,193.5
+Marsupial,Phascolarctos cinereus,20.2,5800
+Marsupial,Philander opossum,3.83,450
+Marsupial,Planigale maculata,0.2,11
+Marsupial,Planigale gilesi,0.17,9.2
+Marsupial,Planigale ingrami,0.15,4.25
+Marsupial,Planigale tenuirostris,0.14,6.05
+Marsupial,Potorous tridactylus,9.53,1100
+Marsupial,Pseudantechinus macdonnellensis,0.49,32.5
+Marsupial,Pseudocheirus archeri,5.87,1095
+Marsupial,Pseudocheirus herbertensis,4.32,1115
+Marsupial,Pseudocheirus occidentalis,5.58,1000
+Marsupial,Pseudocheirus peregrinus,4.52,900
+Marsupial,Sarcophilus harrisii,16.09,8000
+Marsupial,Setonix brachyurus,13.9,3250
+Marsupial,Sminthopsis crassicaudata,0.36,15
+Marsupial,Sminthopsis griseoventer,0.49,17.5
+Marsupial,Sminthopsis leucopus,0.41,22.5
+Marsupial,Spilocuscus maculatus,13.4,3815
+Marsupial,Tarsipes rostratus,0.36,9
+Marsupial,Thylacinus cynocephalus,51.19,20000
+Marsupial,Thylogale billardieri,22.1,5450
+Marsupial,Thylogale stigmatica,17.8,4600
+Marsupial,Thylogale thetis,19.2,5400
+Marsupial,Trichosurus caninus,11.8,2900
+Marsupial,Trichosurus vulpecula,11,2600
+Marsupial,Vombatus ursinus,59,26000
+Marsupial,Wallabia bicolor,32.9,15000
+Marsupial,Wyulda squamicaudata,10.1,1675

@@ -14,7 +14,7 @@
 
 ## Purpose of the assignment
 
-This assessment asks you to carry out and report a reproducible data-analysis workflow. You will work with your own student-specific sample from one of the supplied datasets, check and clean the data, select and carry out appropriate analyses, and communicate the methods and results clearly.
+This assessment asks you to carry out and report a reproducible data-analysis workflow. You will work with your own student-specific sample from one of the supplied datasets, check the data and document any cleaning that is needed, select and carry out appropriate analyses, and communicate the methods and results clearly.
 
 The assessment is a **Methods and Results report only**. Do not include an Introduction, Discussion, Abstract or Lay Summary. For this assessment, references and citations are not assessed, so do not include them. Do not interpret the causes or wider implications of your findings: report the results accurately and concisely.
 
@@ -34,7 +34,7 @@ Each student receives a personal sample of rows from a master dataset. Sampling 
 
 ### Dataset A — Vaccine immunology
 
-This dataset represents a multicentre study of immune response to an influenza vaccine. Adult participants received either a standard-dose or high-dose vaccine. Blood was collected before vaccination and 28 days later.
+This dataset represents a multicentre study of immune response to an influenza vaccine. Adult participants received either a standard-dose or high-dose vaccine. Blood was collected before vaccination and 28 days later. The downloader gives equal representation of each centre-dose combination; study centre is a recruitment and balancing variable, not a factor you need to model for Cycle 1.
 
 | Variable | Description |
 | --- | --- |
@@ -44,21 +44,30 @@ This dataset represents a multicentre study of immune response to an influenza v
 | `age_years` | Age at vaccination, in years |
 | `sex` | Female or male |
 | `prior_vaccination` | Influenza vaccine received in the previous season: yes or no |
-| `baseline_titre` | Haemagglutination-inhibition antibody titre before vaccination |
-| `day28_titre` | Haemagglutination-inhibition antibody titre 28 days after vaccination |
+| `baseline_antibody_au_ml` | Antibody concentration before vaccination, in arbitrary units per mL (AU/mL) |
+| `day28_antibody_au_ml` | Antibody concentration 28 days after vaccination, in arbitrary units per mL (AU/mL) |
 | `day28_ifng_pg_ml` | Interferon-gamma concentration at day 28, in pg/mL |
 | `adverse_event_grade` | Highest adverse-event grade: none, mild, moderate or severe |
 
-Possible lines of enquiry include the effects of dose on day-28 titre or fold-change, associations of immune response with age, sex or prior vaccination, association between cellular and antibody response, and whether adverse-event grade differs by dose. Antibody titres are commonly right-skewed: distinguish post-vaccination titre from change relative to baseline, and consider whether transformation or a non-parametric approach is appropriate.
+`AU/mL` means arbitrary units per millilitre: an assay-specific measure where higher values indicate more antibody.
+
+Approximately 5% of records contain one deliberately introduced data-quality issue: a blank entry, an impossible numeric value, or text in a numeric column. Identify and document how you handle these records; do not silently remove or alter them.
+
+Choose a question that you can answer with your dataset. For example, you could investigate:
+
+- whether vaccine dose is associated with the day-28 antibody concentration or the change in concentration from baseline;
+- whether age or previous vaccination is associated with antibody response; or
+- whether the day-28 antibody concentration is associated with the day-28 interferon-gamma concentration, or whether adverse-event frequency differs between vaccine doses.
+
+The antibody-concentration and interferon-gamma measurements are positive and right-skewed. Inspect their distributions and model diagnostics; a logarithmic transformation may be useful. The dataset has been designed for the tests and models taught in Topics 1–5. You are **not** expected to use a non-parametric test for this assessment.
 
 ### Dataset B — Plant ecophysiology
 
-This dataset represents a field experiment on drought responses in three genotypes of common bean (*Phaseolus vulgaris*). Plants were grown in field blocks under well-watered or drought conditions. Physiological and growth traits were measured at flowering; plants were also scored for disease severity.
+This dataset represents a controlled glasshouse experiment on drought responses in three genotypes of common bean (*Phaseolus vulgaris*). Plants were assigned to well-watered or drought conditions. Physiological and growth traits were measured at flowering; plants were also scored for whether disease was present.
 
 | Variable | Description |
 | --- | --- |
 | `plant_id` | Unique plant identifier |
-| `field_block` | Experimental block: B01 to B12 |
 | `genotype` | Bean genotype: G1, G2 or G3 |
 | `water_treatment` | Well-watered or drought |
 | `soil_moisture_pct` | Volumetric soil moisture, % |
@@ -66,9 +75,15 @@ This dataset represents a field experiment on drought responses in three genotyp
 | `stomatal_conductance_mmol_m2_s` | Stomatal conductance, mmol m⁻² s⁻¹ |
 | `leaf_area_cm2` | Total measured leaf area, cm² |
 | `shoot_dry_mass_g` | Shoot dry mass, g |
-| `disease_severity` | Ordinal disease score: none, low, moderate or high |
+| `disease_present` | Whether disease was present: yes or no |
 
-Possible lines of enquiry include drought effects on conductance, leaf area or dry mass; genotype differences in drought response; associations between soil moisture and conductance or biomass; and associations of disease severity with treatment or growth. Field block is part of the experimental design: consider block-to-block variation and genotype-by-treatment interactions.
+Choose a question that you can answer with your dataset. For example, you could investigate:
+
+- whether drought treatment affects stomatal conductance, leaf area or shoot dry mass;
+- whether bean genotypes differ in their response to drought; or
+- whether soil moisture is associated with stomatal conductance or shoot dry mass, or whether disease frequency differs between water treatments.
+
+This is a fully factorial two-factor experiment. A genotype-by-treatment interaction may be relevant to your chosen question. The numerical outcomes are suitable for the two-way ANOVA and regression approaches in Topic 5; `disease_present` can be compared between groups with the chi-square approach in Topic 3. You are not expected to use blocked or ordinal models for Cycle 1.
 
 ## What your report must include
 
@@ -77,7 +92,7 @@ Possible lines of enquiry include drought effects on conductance, leaf area or d
 Describe the study and analysis clearly enough for another student to understand and repeat them. Include:
 
 - The design, samples or groups, controls, replication, relevant conditions and measurement variables.
-- Data checking and cleaning, including how you identified and handled missing or corrupted observations. Do not silently remove or alter observations.
+- Data checking and cleaning, including how you checked for missing or corrupted observations and, if any were found, how you handled them. Do not silently remove or alter observations.
 - Data processing, calculations and summary statistics.
 - For every inferential test: the null and alternative hypotheses, the test or model used, relevant assumptions, software, and any exclusions or transformations.
 - At least **two different inferential statistical tests or models**. A normality test does not count towards this minimum.
@@ -143,16 +158,3 @@ At the end of your submission, state whether you used GenAI. If you did, name th
 ## Academic integrity
 
 Submit your own work. Do not fabricate data or misrepresent authorship. Any academic-integrity concerns will be handled under University and module procedures.
-
-## Marking
-
-| Criterion | Points |
-| --- | ---: |
-| Experimental methods | 25 |
-| Data processing and analysis methods | 20 |
-| Figures (minimum two) | 30 |
-| Summary table (minimum one) | 15 |
-| Results narrative | 10 |
-| **Total** | **100** |
-
-The rubric also includes non-scoring rows for the GenAI declaration and academic integrity.

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cycle 1 personal dataset downloader</title>
+  <style>
+    body { margin: 0; color: #13253b; font: 16px/1.5 system-ui, sans-serif; }
+    #cycle-1-downloader { max-width: 48rem; padding: 1.25rem; border: 1px solid #0c5b96; border-radius: .5rem; background: #f4fbfd; box-sizing: border-box; }
+    input { display: block; width: 100%; max-width: 20rem; margin: .5rem 0 1rem; padding: .5rem; border: 1px solid #53707a; border-radius: .25rem; box-sizing: border-box; font: inherit; }
+    .buttons { display: flex; flex-wrap: wrap; gap: .75rem; }
+    button { padding: .55rem .8rem; border: 0; border-radius: .25rem; background: #0c5b96; color: #fff; font: inherit; cursor: pointer; }
+    button:disabled { cursor: wait; opacity: .7; }
+  </style>
+</head>
+<body>
+  <div id="cycle-1-downloader">
+    <label for="cycle-1-student-id"><strong>Nine-digit student ID</strong></label>
+    <input id="cycle-1-student-id" name="student-id" inputmode="numeric" pattern="[0-9]{9}" maxlength="9" autocomplete="off" aria-describedby="cycle-1-download-help cycle-1-download-status">
+    <p id="cycle-1-download-help">Each download contains 200 rows and is balanced across the main experimental groups.</p>
+    <div class="buttons">
+      <button type="button" data-dataset="vaccine">Download Dataset A: vaccine immunology CSV</button>
+      <button type="button" data-dataset="bean">Download Dataset B: bean ecophysiology CSV</button>
+    </div>
+    <p id="cycle-1-download-status" role="status" aria-live="polite"></p>
+  </div>
+  <script src="../../assets/cycle-1-sample-downloader.js"></script>
+</body>
+</html>

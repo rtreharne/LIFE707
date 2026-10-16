@@ -8,6 +8,7 @@ project:
   github: rtreharne/LIFE707
   static_files:
     - data
+    - assets
   toc:
     - file: index.md
     - file: chapters/onboarding.md
@@ -16,6 +17,9 @@ project:
     - file: chapters/topic-2.md
     - file: chapters/topic-3.md
     - file: chapters/topic-4.md
+    - file: chapters/topic-5.md
+    - file: chapters/topic-5-linear-regression.md
+    - file: chapters/cycle-1-assignment.md
 site:
   template: book-theme
   parts:

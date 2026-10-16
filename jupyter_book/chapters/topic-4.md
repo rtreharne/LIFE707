@@ -23,9 +23,9 @@ it before starting the workshop material, then use the chapter to practise the
 methods in R.
 :::
 
-<div style="position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 2rem;">
-	<iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=6de60ef3-4b7e-4699-b530-b1b200cb7bc2&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Data wrangling and cleaning"></iframe>
-</div>
+<iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=6de60ef3-4b7e-4699-b530-b1b200cb7bc2&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Data wrangling and cleaning"></iframe>
+
+<div aria-hidden="true" style="height:2rem;"></div>
 
 ## Files for this week
 
@@ -64,9 +64,9 @@ This video demonstrates the simple `tidyverse` functions used to clean and
 manipulate data in this section.
 :::
 
-<div style="position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 2rem;">
-	<iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=7f920521-c054-47ba-96f0-b1b200f04c29&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Simple tidyverse functions for cleaning data in R"></iframe>
-</div>
+<iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=7f920521-c054-47ba-96f0-b1b200f04c29&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Simple tidyverse functions for cleaning data in R"></iframe>
+
+<div aria-hidden="true" style="height:2rem;"></div>
 
 Let’s begin by exploring the iris data set, which gives the measurements in centimeters of the variables sepal length and width, and petal length and width, respectively, for 50 flowers from each of 3 species of iris. The species are *Iris setosa, versicolor*, and *virginica*. This data set is available as part of the base R package. Let’s have a look at the data:
 
@@ -352,9 +352,9 @@ This video walks through the Gapminder example before you work through the
 data-cleaning steps below.
 :::
 
-<div style="position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 2rem;">
-	<iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=93396826-12a1-4103-a172-b1b600b1c13b&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Topic 4 Gapminder example walk through"></iframe>
-</div>
+<iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=93396826-12a1-4103-a172-b1b600b1c13b&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Topic 4 Gapminder example walk through"></iframe>
+
+<div aria-hidden="true" style="height:2rem;"></div>
 
 We will be using the Gapminder GDP per capita data that is found in the `gapminder` package, as well as online: <https://www.gapminder.org/data/>. Download the <a href="/data/topic-4-data-wrangling-cleaning/indicator_gapminder_gdp_per_capita_ppp.csv?download=1">indicator_gapminder_gdp_per_capita_ppp.csv</a> file and read the data in using the `read_csv` function in `tidyverse`. (Note that the `read_csv` function is very similar to the `read.csv` function that you’ve seen previously, but a bit more flexible in accepting column names that start with a number - a detail that will be important later.)
 
@@ -621,9 +621,9 @@ Watch this walkthrough after making your own attempt at the exercises. Use it
 to compare your approach with the worked solutions below.
 :::
 
-<div style="position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 2rem;">
-	<iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=7a82816e-010b-4e45-bb48-b1b600b8c0d6&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Topic 4 task walk through"></iframe>
-</div>
+<iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=7a82816e-010b-4e45-bb48-b1b600b8c0d6&amp;autoplay=false&amp;offerviewer=true&amp;showtitle=true&amp;showbrand=true&amp;captions=true&amp;interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Topic 4 task walk through"></iframe>
+
+<div aria-hidden="true" style="height:2rem;"></div>
 
 ### Exercise 1
 
