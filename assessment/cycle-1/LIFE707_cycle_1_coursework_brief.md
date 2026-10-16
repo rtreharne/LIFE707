@@ -83,7 +83,7 @@ Choose a question that you can answer with your dataset. For example, you could 
 - whether bean genotypes differ in their response to drought; or
 - whether soil moisture is associated with stomatal conductance or shoot dry mass, or whether disease frequency differs between water treatments.
 
-This is a fully factorial two-factor experiment. A genotype-by-treatment interaction may be relevant to your chosen question. The numerical outcomes are suitable for the two-way ANOVA and regression approaches in Topic 5; `disease_present` can be compared between groups with the chi-square approach in Topic 3. You are not expected to use blocked or ordinal models for Cycle 1.
+This is a fully factorial two-factor experiment. A genotype-by-treatment interaction may be relevant to your chosen question. The numerical outcomes are suitable for the two-way ANOVA and regression approaches in Topic 5; `disease_present` can be compared between groups with the chi-square approach in Topic 3.
 
 ## What your report must include
 
