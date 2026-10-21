@@ -85,6 +85,8 @@ Choose a question that you can answer with your dataset. For example, you could 
 
 This is a fully factorial two-factor experiment. A genotype-by-treatment interaction may be relevant to your chosen question. The numerical outcomes are suitable for the two-way ANOVA and regression approaches in Topic 5; `disease_present` can be compared between groups with the chi-square approach in Topic 3.
 
+Approximately 5% of records contain one deliberately introduced data-quality issue: a blank entry, an impossible numeric value, or text in a numeric column. Identify and document how you handle these records; do not silently remove or alter them.
+
 ## What your report must include
 
 ### Methods
