@@ -25,3 +25,5 @@ jupyter_book/data_manifest.json
 
 # Assessment materials are managed locally and must not be added as new files.
 /assessment/
+/assessment/cycle-2-assessment-pack/main/
+/assessment/cycle-2-assessment-pack/resit/
