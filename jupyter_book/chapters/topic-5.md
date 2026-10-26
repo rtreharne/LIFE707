@@ -396,3 +396,96 @@ contains field-voles caught in Kielder Forest between 2015 and 2017.
    appropriate types.
 2. Produce a plot and perform an ANOVA to determine whether male vole weight
    differs between years.
+
+## Exercise solutions
+
+Try each exercise before reading these solutions. They assume that you have
+already run `library(tidyverse)` and that the data files are in your working
+folder.
+
+### Exercise 1: Antidepressants
+
+There is one numeric response variable (`wellbeing`) and one categorical
+predictor with three groups (`Group`). A one-way ANOVA is therefore the
+appropriate test.
+
+```r
+# Read the data. The first row contains the column names.
+antid <- read.table("antid1.txt", header = TRUE)
+
+# Tell R that the dose groups are categories, and set a meaningful order for
+# the plot and later comparisons.
+antid$Group <- factor(antid$Group, levels = c("Placebo", "Low", "High"))
+
+# Compare the wellbeing scores across the three dose groups.
+ggplot(antid, aes(x = Group, y = wellbeing)) +
+  geom_boxplot() +
+  labs(x = "Antidepressant dose", y = "Wellbeing score") +
+  theme_bw()
+```
+
+![Boxplot of wellbeing score by antidepressant dose](assets/topic-5/antidepressant-exercise-solution.png)
+
+The boxplot suggests that the high-dose group has higher wellbeing scores than
+the placebo group. Fit a linear model and use `anova()` to test whether the
+mean wellbeing score differs among the groups.
+
+```r
+# Fit a one-way ANOVA model, then display its ANOVA table.
+antid_model <- lm(wellbeing ~ Group, data = antid)
+anova(antid_model)
+
+# The overall ANOVA is significant, so compare each pair of dose groups.
+antid_aov <- aov(antid_model)
+TukeyHSD(antid_aov)
+```
+
+The ANOVA gives $F_{2,12} = 5.12$ and $p = 0.0247$, so there is evidence that
+mean wellbeing differs between at least some dose groups. The Tukey test shows
+that the high-dose group has a higher mean score than the placebo group
+(difference = 2.8, adjusted $p = 0.021$). The low dose does not differ
+significantly from either placebo or high dose.
+
+### Exercise 2: Voles
+
+First retain male voles, remove the four records with a missing weight, and
+store year as a factor because it represents three groups rather than a
+continuous measurement.
+
+```r
+# Read the data, retain male voles with a recorded weight, and make year a
+# categorical variable for the ANOVA.
+voles <- read.csv("voles.csv")
+male_voles <- voles %>%
+  filter(sex == "M", !is.na(weight)) %>%
+  mutate(year = factor(year))
+
+# Compare male vole weights between sampling years.
+ggplot(male_voles, aes(x = year, y = weight)) +
+  geom_boxplot() +
+  labs(x = "Year", y = "Male vole weight (g)") +
+  theme_bw()
+```
+
+![Boxplot of male vole weight by year](assets/topic-5/vole-exercise-solution.png)
+
+The 2017 male voles appear heavier than those caught in the earlier years. Use
+a one-way ANOVA to test this pattern, followed by Tukey comparisons to identify
+which years differ.
+
+```r
+# Test whether mean male vole weight differs among years.
+vole_model <- lm(weight ~ year, data = male_voles)
+anova(vole_model)
+
+# Identify the year pairs responsible for a significant overall result.
+vole_aov <- aov(vole_model)
+TukeyHSD(vole_aov)
+```
+
+The ANOVA gives $F_{2,365} = 70.84$ and $p < 0.001$, providing very strong
+evidence that mean male vole weight differs between years. Tukey comparisons
+show that 2017 is heavier than both 2015 (difference = 10.05 g, adjusted
+$p < 0.001$) and 2016 (difference = 7.98 g, adjusted $p < 0.001$). The
+difference between 2015 and 2016 is not statistically significant (adjusted
+$p = 0.063$).
