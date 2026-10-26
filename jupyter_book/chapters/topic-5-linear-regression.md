@@ -34,7 +34,9 @@ This document contains the entire workshop covering linear regression, data tran
 
 Watch this introduction to linear regression before beginning the workshop.
 
-<iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=3bc88d4b-d15a-49b5-8cd8-b37200effce9&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all" style="border: 1px solid #464646; width: 100%; aspect-ratio: 16 / 9; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Introduction to linear regression"></iframe>
+<div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%">
+	<iframe src="https://liverpool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=571a09bc-8821-4c28-a69c-b4e50088ad2d&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Regression Part 1"></iframe>
+</div>
 <div aria-hidden="true" style="height:2rem;"></div>
 
 
