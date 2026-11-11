@@ -22,7 +22,10 @@ project:
     - file: chapters/topic-6.md
     - file: chapters/cycle-1-assignment.md
 site:
-  template: book-theme
+  # Pin the Book Theme to the newest release supported by jupyter-book 2.1.6.
+  # Using the unpinned template name fetches the theme's main branch, which
+  # currently requires a newer MyST engine than the one in this project.
+  template: https://github.com/jupyter-book/myst-theme/releases/download/myst-to-react%401.4.1/book-theme.zip
   parts:
     footer: footer.md
   options:
