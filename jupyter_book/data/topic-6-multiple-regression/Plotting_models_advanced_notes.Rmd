@@ -1,0 +1,168 @@
+---
+title: "Plotting models"
+author: "Steve Paterson"
+date: "2024-05-31"
+output: html_document
+---
+
+```{r, include=FALSE}
+wkdir <- "~/Dropbox/teaching/LIFE707/LIFE707_24_25/Topic_material/separate_topics/Topic_6"
+knitr::opts_knit$set(root.dir = wkdir)
+setwd(wkdir)
+library(tidyverse)
+```
+
+Included here are some further notes on how to plot models. This is only for keen students and involves some slightly tricky code. It's useful in preparing reports and I've included it here given that you'll be writing up your projects next semester. 
+
+You'll need the tidyverse loaded first.
+
+```{r, eval =FALSE}
+library(tidyverse)
+```
+
+## Errorbars on bargraphs
+
+This is a really common plot in papers, where you have a bar graph giving the means of different groups and an errorbar, typically the standard deviation within the group but sometimes a confidence interval or a standard error. 
+
+The file antid1.txt contains data on measures of wellbeing in groups of patients given placebod, low dose or high dose of an antidepressant.
+
+```{r}
+antid <- read.table("antid1.txt",header=TRUE)
+antid$Group <- factor(antid$Group, levels=c("Placebo","Low","High"))
+#defines a meaningful order of factors
+```
+
+We've seen how to generate a boxplot of these data
+```{r}
+antid.plot1 <- ggplot(data=antid, aes(x=Group,y=wellbeing))
+
+antid.plot1 + geom_boxplot()
+```
+Remember that the box plots give a spread of the data, the middle line in the median, the box is the inter-quartile range and the whiskers extending beyond the box are either 1.5x the interquartile range or the furthest point in the data, whichever is the least.
+
+For these type of data, one can also plot the mean of each group with a barplot plus confidence intervals, standard deviations or standard errors. (Depending on what you want to show or the accepted practice in a field.) First we have to work out the mean. We'll need to create a data frame with these data. Let's do standard deviation here. Be clear in presenting data what the error bars are. The code below uses `group_by` to group the antid dataframe by the values in the Group column (Palcebo, Low or High) and then uses `summarise` to calculate the mean for each, plus error bars for the mean +/- the standard deviation.
+
+```{r}
+antid.summary <- antid %>% group_by(Group) %>% summarise(mean.wellbeing = mean(wellbeing), 
+      lower.sd=mean(wellbeing) - sd(wellbeing),
+      upper.sd=mean(wellbeing) + sd(wellbeing))
+antid.summary
+```
+
+
+```{r}
+antid.plot2 <- ggplot(data=antid.summary, aes(x=Group,y=mean.wellbeing))
+
+antid.plot2 + geom_col() 
+#some people use geom_bar(stat="identity") instead of geom_col()
+  
+```
+
+To this we can use `geom_errorbar` to add error bars
+```{r}
+antid.plot2 + geom_col() +
+  geom_errorbar(aes(ymin=lower.sd,ymax=upper.sd))
+```
+
+And play with various options to make it prettier. Here bars are filled in dark grey, with black outlines with a line width (lwd) of 1. The error bars have a width of 0.2 of the bar width and have a line width of 1.
+
+```{r}
+antid.plot2 + geom_bar(stat="identity", fill = "darkgrey",color="black",lwd=1) +
+  geom_errorbar(aes(ymin=lower.sd,ymax=upper.sd),width=0.2,lwd=1)
+```
+
+To just plot the upper errorbar, change the lower error bar to the mean
+```{r}
+antid.plot2 + geom_bar(stat="identity", fill = "darkgrey",color="black",lwd=1) +
+  geom_errorbar(aes(ymin=mean.wellbeing,ymax=upper.sd),width=0.2,lwd=1)
+```
+Do some other tidying up to make publication ready.
+
+```{r}
+antid.plot2 + geom_bar(stat="identity", fill = "darkgrey",color="black",lwd=1) +
+  geom_errorbar(aes(ymin=mean.wellbeing,ymax=upper.sd),width=0.2,lwd=1) + 
+  ylab("Mean wellbeing score") + theme_classic(base_size=18)
+```
+
+Hopefully examples like this provide code you can reuse for your own data. (Remember when presenting this, to say what the error bars are in the figure legend).
+
+## Plotting model fits to data
+
+In the fruit fly example, we created a model and plotted the raw data, but we didn't plot the model to show how it fitted the data.
+
+Reading in the data again and creating the regression model.
+```{r}
+fruitfly <- read.table("fruitfly.txt",header=TRUE)
+fruitfly$activity <- factor(fruitfly$activity, levels = c("isolated","one","many","low","high"))
+ff1 <- lm(longevity ~ thorax + activity, data = fruitfly)
+```
+
+And plotting the data
+```{r}
+fly.plot1 <- ggplot(data=fruitfly, aes(x=thorax, y=longevity))
+
+#produce a scatterplot for each treatment level
+fly.plot1 + geom_point() +
+  xlab("Thorax length (mm)") + ylab("Longevity (days)") +
+  facet_wrap(~activity)
+```
+
+One way to get fitted lines on the plot is to use `geom_smooth`. 
+
+```{r}
+fly.plot1 + geom_point() +
+  xlab("Thorax length (mm)") + ylab("Longevity (days)") +
+  facet_wrap(~activity) +
+  geom_smooth(method="lm")
+```
+
+
+Here `geom_smooth(method="lm")` asks R to plot a line through each set of data. However, it's not based on the model we produced. `geom_smooth` will produce a separate line, potentially with a slightly different slope, to each panel/treatment group. Our model though, didn't find any interactions, meaning that it has the same slope for each treatment. Using `geom_smooth` is therefore slightly misleading if we want to present our model.
+
+The solution is to use `predict` to generate a new set of predicted values from our model for each data point.
+
+```{r}
+fly.predict <- predict(ff1, interval = "confidence")
+head(fly.predict)
+```
+
+So this gives fitted value (the prediction from the model), plus a 95% confidence interval for the model prediction. We then create a new data frame containing the original data and model predictions pasted side by side using `cbind`.
+
+```{r}
+fly.plotdata <- cbind(fruitfly,fly.predict)
+head(fly.plotdata)
+```
+
+We can reuse the code we had before using this data frame. First plot the data points again.
+
+```{r}
+fly.plot2 <- ggplot(data=fly.plotdata, aes(x=thorax, y=longevity))
+
+#produce a scatterplot for each treatment level
+fly.plot2 + geom_point() +
+  xlab("Thorax length (mm)") + ylab("Longevity (days)") +
+  facet_wrap(~activity)
+```
+
+This looks exactly as before. But we can now add a fitted line to each panel, based on the model prediction.
+
+```{r}
+fly.plot2 + geom_point() +
+  xlab("Thorax length (mm)") + ylab("Longevity (days)") +
+  facet_wrap(~activity) +
+  geom_line(aes(y=fit))
+```
+
+This is quite nice. The range of the line in each panel is the same as the range of the data in each panel. We just had to specify that we wanted to draw a line with the fitted data (the fit column in fly.plotdata) using `aes(y=fit)` and `geom_line` did the rest.
+
+Usually a fitted line like this is enough. But if we want to be fancy and put the confidence interval in like `geom_smooth` does, this is also possible because we have upper and lower confidence intervals calculated using `predict` and stored in the upr and lwr columns in fly.plotdata. `geom_ribbon` lets us do this. We make the ribbon a bit transparent using `alpha=0.2`.
+
+```{r}
+fly.plot2 + geom_point() +
+  xlab("Thorax length (mm)") + ylab("Longevity (days)") +
+  facet_wrap(~activity) +
+  geom_line(aes(y=fit)) +
+  geom_ribbon(aes(ymin = lwr, ymax = upr),alpha=0.2)
+```
+
+You can play with colours, different themes, etc depending on where you want to present the plot.

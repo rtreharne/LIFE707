@@ -19,6 +19,7 @@ project:
     - file: chapters/topic-4.md
     - file: chapters/topic-5.md
     - file: chapters/topic-5-linear-regression.md
+    - file: chapters/topic-6.md
     - file: chapters/cycle-1-assignment.md
 site:
   template: book-theme

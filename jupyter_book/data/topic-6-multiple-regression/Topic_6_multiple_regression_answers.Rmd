@@ -1,0 +1,363 @@
+---
+title: "Multiple Regression Answers"
+author: "Steve Paterson"
+date: "2024-05-30"
+output: html_document
+---
+
+```{r, include=FALSE}
+wkdir <- "~/Dropbox/teaching/LIFE707/LIFE707_24_25/Topic_material/separate_topics/Topic_6"
+knitr::opts_knit$set(root.dir = wkdir)
+setwd(wkdir)
+library(tidyverse)
+
+```
+
+## Fruitflies
+
+> TASK
+>
+> What is the expected lifespan of flies in the 'low' activity group and with thorax lengths of 0.75 and 0.85mm?
+>
+> The lifespan of flies in the 'high' activity group with thorax lengths of 0.75 and 0.85mm?
+>
+> The lifespan of flies in the 'isolated' activity group with thorax lengths of 0.75 and 0.85mm?
+>
+> You'll need to look at the coefficients produced from the model and calculate a prediction. You can check you're in the right ballpark by looking at the plot above.
+
+Look again at the model.
+
+```{r, echo=FALSE}
+#here to make sure R markdown generates ff1
+fruitfly <- read.table("fruitfly.txt",header=TRUE)
+fruitfly$activity <- factor(fruitfly$activity, levels = c("isolated","one","many","low","high"))
+ff1 <- lm(longevity ~ thorax + activity, data = fruitfly)
+```
+
+```{r}
+summary(ff1)
+```
+
+Let's manually work out the longevity of these flies. Predicted longevity = intercept + thorax length \* fitted coefficient for slope + low activity coefficient.
+
+*Thus, in the low activity group with size of 0.75mm*
+
+Predicted longevity = -48.749 + 134.341 \* 0.75 -7.015 = 44.99 days
+
+Check this looks sensible on the plot. If you've got the calculation badly wrong you'll see it.
+
+*The low activity group with size of 0.85mm*
+
+Predicted longevity = -48.749 + 134.341 \* 0.85 -7.015 = 58.43 days
+
+*The high activity group with size of 0.75mm*
+
+Predicted longevity = -48.749 + 134.341 \* 0.75 -20.004 = 32.00 days
+
+*The high activity group with size of 0.85mm*
+
+Predicted longevity = -48.749 + 134.341 \* 0.85 -20.004 = 45.44 days
+
+Some of you may be wondering were the isolated treatment group is in the table. The other 4 treatment groups are compared against the isolated group, so it's in the intercept.
+
+*The isolated activity group with size of 0.75mm*
+
+Predicted longevity = -48.749 + 134.341 \* 0.75 = 52.01 days
+
+*The isolated activity group with size of 0.85mm*
+
+Predicted longevity = -48.749 + 134.341 \* 0.85 = 65.44 days
+
+## Hydrolases
+
+> Glycoside hydrolases able to metabolise starch were isolated from two different species of bacteria (A and B) and their activity in enzyme units (U or µmol/min) measured across a range of salt concentrations (percentage NaCl w/v).
+>
+> The data are within the file hydrolase.txt
+>
+> First plot out hydrolase activity vs salt concentration from the 2 species. Do these appear to have the same or different slopes in the two species?
+>
+> Perform an analyse to determine whether the slopes are statistically different.
+
+Read the file in and check it
+
+```{r}
+hydrolase <- read.table("hydrolase.txt",header=TRUE)
+head(hydrolase)
+```
+
+Define species as a factor
+
+```{r}
+hydrolase$species <- factor(hydrolase$species, levels=c("A","B")) 
+#levels argument redundant, since levels are assigned alphabetically, but good practice
+```
+
+What do they look like? We looked at a similar example for fruitfly. One way to plot this is as follows.
+
+```{r}
+hydro.plot1 <- ggplot(data=hydrolase, aes(x=salt, y=activity))
+
+hydro.plot1 + geom_point() + 
+  facet_wrap(~species) + 
+  xlab("Salt concentration (w/v)") + ylab("Hydrolase activity (U)")
+```
+
+These look like the slopes are different for the two groups, ie an interaction.
+
+Fit a model and test interaction. Only the interaction term will be tested by `drop1` if it exists in the model, not the main effects.
+
+```{r}
+hydro.mod <- lm(activity ~ species*salt,data=hydrolase)
+summary(hydro.mod)
+
+drop1(hydro.mod,test="F")
+```
+
+Here the summary table and plot suggest an interaction, and `drop1` confirms it.
+
+Finally, you can check the model looks ok with `plot(hydro.mod)`. You wouldn't put a plot like this in a report, it's simply a diagnostic plot to check your model is sensible.
+
+```{r, echo = FALSE}
+par(mfrow=c(2,2))
+plot(hydro.mod)
+par(mfrow=c(1,1))
+
+```
+
+## Birthweight
+
+> *TASK*
+>
+> Generate a minimal adequate model from the following maximal model
+>
+> `lm(Birthweight ~ (Gestation + smoker + mppwt)^2, data = birthweight)`
+
+------------------------------------------------------------------------
+
+```{r}
+birthweight <- read.csv("birthweight.csv",header=TRUE)
+
+```
+
+Start with the maximal model
+
+```{r}
+bw.max <- lm(Birthweight ~ (Gestation + smoker + mppwt)^2, data = birthweight)
+```
+
+Can we drop anything, and what should we drop first?
+
+```{r}
+drop1(bw.max, test="F")
+```
+
+None of terms is significant, but Gestation:mppwt is the least significant so we drop this first. We can do this with the `update` function.
+
+```{r}
+bw.mod.1 <- update(bw.max, .~. - Gestation:mppwt)
+```
+
+Then use `drop1` again on this new model
+
+```{r}
+drop1(bw.mod.1, test="F")
+```
+
+Next term to drop is Gestation:smoker. Take your time to keep track of each model name and term to be dropped. It's easy to make mistakes during this.
+
+```{r}
+bw.mod.2 <- update(bw.mod.1, .~. - Gestation:smoker)
+drop1(bw.mod.2, test="F")
+```
+
+smoker:mppwt isn't quite significant. Drop it.
+
+```{r}
+bw.mod.3 <- update(bw.mod.2, .~. - smoker:mppwt)
+drop1(bw.mod.3, test="F")
+```
+
+Everything is now significant, i.e. nothing can be dropped and we've arrived at the minimal model.
+
+We can check what it looks like with `summary(bw.mod.3)` and `plot(bw.mod.3)`:
+
+```{r, echo=FALSE}
+summary(bw.mod.3)
+
+par(mfrow=c(2,2))
+plot(bw.mod.3)
+par(mfrow=c(1,1))
+```
+
+This is relatively OK given we have a fairly small number of data points.
+
+------------------------------------------------------------------------
+
+### Alternate approach
+
+You can also use the `step` function to cut out some of the steps, but it will keep the smoker:mppwt and has to be nudged along from there.
+
+```{r, , results="hide"}
+#starting again from the maximal model
+bw.step.1 <- step(bw.max)
+drop1(bw.step.1, test ="F") # still has smoker:mppwt
+
+bw.step.2 <- update(bw.step.1, .~. - smoker:mppwt)
+drop1(bw.step.2, test="F")
+
+```
+
+This gets us to the same minimal adequate model as before.
+
+> Comment on the importance of mother's prepregnancy weight (mppwt).
+
+From the model, mppwt (mother's weight) is statistically significant at the 5% level but not the 1% level. This is one measure of 'significance'. But biological significance might also be considered if you want to ask how 'important' is mother's weight for birth weight. One way to do this is to predict from the model what weight of baby we expect from two mothers of different weights. The summary of the model (`summary(bw.mod.3)`) give us the formula of the model:
+
+`birthweight ~ -7.165 + 0.313*Gestation (weeks) -0.665*smoker + 0.0198*mppwt`
+
+We just need to find some sensible values to plus into the model.
+
+First, what's a typical gestation time?
+
+```{r}
+summary(birthweight$Gestation)
+```
+
+Let's take the median gestation time of 39.5 weeks.
+
+Second, what are sensible weights to give the model for a 'light' mother and a 'heavy' mother?
+
+```{r}
+summary(birthweight$mppwt)
+```
+
+Using the interquartile range we could use a value for a 'light' mother as 115lbs and a 'heavy' mother as 135lbs. The language of 'light' and 'heavy' is problematic and comes with some social baggage. By picking the interquartile range (containing half of the women in the study), these are women who are both within the typical range of weights, but just a bit lighter than average or a bit heavier than average.
+
+Let's make things a bit easier by predicting birth weight from non-smokers, since that term will go to zero in the model (`-0.665*0 = 0`). So for intercept + gestation + mother's age:
+
+A 115 lb mother giving birth at 39.5 weeks could expect a baby of
+
+-7.165 + 0.313 \* 39.5 + 0.0198 \* 115 = 7.48 lbs
+
+A 135 lb mother giving birth at 39 weeks could expect a baby of
+
+-7.165 + 0.313 \* 39.5 + 0.0198 \* 135 = 7.87 lbs
+
+So there's some difference (\~0.4 lbs), but not huge.
+
+The same approach for gestation time, taking the median for mother's weight and the interquartile range for gestation time as 38 - 41 weeks, gives a bigger difference (nearly 1 lb). It's more obvious biological effect that the longer a baby grows inside mum the bigger it gets when it finally comes out.
+
+-7.165 + 0.313 \* 38 + 0.0198 \* 125 = 7.20 lbs
+
+-7.165 + 0.313 \* 41 + 0.0198 \* 125 = 8.14 lbs
+
+(You can also investigate `predict.lm`, which can take a data frame of dummy values without having to manually do the prediction.)
+
+Some of you have probably tried plotting the model, which is the challenge of plotting Birthweight \~ Gestation + mppwt + smoker, i.e. how is birthweight affected by gestation time and mother's weight and whether she's a smoker or not. I struggled to come up with a very convincing plot, largely because the effect of mother's weight is fairly small. In the material, we saw how to use `ggplot` to visualise Birthweight \~ Gestation + smoker so now we need to work out how to add mppwt to this. One way, which uses code that you've (mostly) already learnt, is to use colour for mppwt.
+
+```{r}
+#what to plot
+bw.plot2 <- ggplot(data = birthweight, aes(x=Gestation, y=Birthweight, color=mppwt))
+
+#how to plot it (this is just the code from the workshop)
+bw.plot2 + geom_point(size=4) + facet_wrap(~smoker) +
+  xlab("Gestation (weeks)") + ylab("Birthweight (lbs)") +
+  theme_bw() +scale_color_gradient(low="blue", high="red") 
+```
+
+## Haemoglobin
+
+> *TASK*
+>
+> The file haemoglobin.csv contains data on haemoglobin levels in the blood from alpha thalasaemia carriers and normal controls (neither have disease symptoms).
+>
+> -   sex; male/female
+>
+> -   phenotype; alpha_carrier/normal
+>
+> -   pcv; packed cell volume (percentage)
+>
+> -   rbc; red blood cell count (1012/L)
+>
+> -   lymph; white blood cell count (106/L)
+>
+> -   hb; haemoglobin concentration (g/dL)
+>
+> Using hb as the response variable explore which, if any, of the other variables is associated with haemoglobin concentration. Produce a table of your model and a plot of your results and briefly comment on the biological interpretation. This provides some more practice of the approach and follows in the same way as before.
+
+Read the data in with `haem <- read.csv("haemoglobin.csv")`.
+
+```{r, include=FALSE}
+haem <- read.csv("~/Dropbox/teaching/LIFE707/LIFE707_24_25/Topic_material/separate_topics/Topic_6/haemoglobin.csv")
+```
+
+```{r}
+summary(haem)
+```
+
+Set sex and phenotype as factors
+
+```{r}
+haem$sex <- factor(haem$sex)
+haem$phenotype <- factor(haem$phenotype)
+```
+
+Remember that hb is the dependent variable. To quickly check it looks roughly normally distributed you can use `hist(haem$hb)` or similar.
+
+Now we can work out which explanatory variables are important. The easiest thing to do is to set up a maximal model with all the other variables and their 2-way interactions as explanatory variables.
+
+```{r}
+heam.max1 <- lm(hb ~ (sex + phenotype +pcv + rbc + lymph)^2, data = haem)
+```
+
+Quickly check the model looks sensible with `plot(heam.max1)`
+
+```{r, echo =FALSE}
+par(mfrow=c(2,2))
+plot(heam.max1)
+par(mfrow=c(1,1))
+```
+
+I'll use the `step` approach to save some code, but it's fine if you want to go all the way through with update.
+
+```{r, results="hide"}
+haem.m1 <- step(heam.max1)
+```
+
+```{r}
+drop1(haem.m1, test="F")
+```
+
+`step` has done the hard work but we we still need to remove lymph
+
+```{r}
+haem.m2 <- update(haem.m1, .~. - lymph)
+drop1(haem.m2, test = "F")
+```
+
+So we've arrived at a minimal model since nothing can be removed from this. Let's look at it with `summary`.
+
+```{r}
+summary(haem.m2)
+```
+
+Sex and pcv are both significant. None of the interactions are. The alpha thalasaemia genotype is not significant (though remember this is just between carriers and controls, there are no homozygote, affected individuals).
+
+Sex F~1,194~ = 4.55, p \< 0.05. pcv F~1,194~ = 754.92, p \< 0.001. To get the F values use the output from `drop1`. Each term has one degree of freedom associated with it. The residual 194 degrees of freedom you can see from `summary((haem.m2)` or `anova((haem.m2)`.
+
+To plot this out
+
+```{r}
+haem.plot1 <- ggplot(data=haem, aes(x=pcv,y=hb, color=sex))
+
+haem.plot1 + geom_point() + facet_wrap(~sex) +
+  xlab("Packed cell volume (%age)") + ylab("Haemoglobin concentration (g/dL)")
+```
+
+Here you can see a really strong effect of packed cell volume on haemoglobin concentration, which makes sense. However, the *direct* effect of sex on hb is quite subtle. From the model, being a male increases your haemoglobin concentration by only 0.23 g/dL . This is small compared to the natural range of haemoglobin concentration, e.g. an interquartile range (use `summary(haem$hb)`) of \~ 11-13g/dL. Visually, this only shifts the intercept on the right hand graph on the plot above by a small amount. **But**, this is after pcv is controlled for. You can see from the plot that males, for whatever reason, can have higher packed cell volume and in turn this gives them higher average haemoglobin concentration than females. Just looking at haemoglobin concentration versus sex would miss this.
+
+```{r}
+haem.plot2 <- ggplot(data=haem, aes(x=sex,y=hb))
+
+haem.plot2 + geom_boxplot() + ylab("Haemoglobin concentration (g/dL)")
+```

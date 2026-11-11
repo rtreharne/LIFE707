@@ -1,0 +1,16 @@
+wellbeing	Group
+3	 Placebo
+2	 Placebo
+1	 Placebo
+1	 Placebo
+4	 Placebo
+5	 Low
+2	 Low
+4	 Low
+2	 Low
+3	 Low
+7	 High
+4	 High
+5	 High
+3	 High
+6	 High

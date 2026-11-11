@@ -1,0 +1,359 @@
+---
+title: "Multiple Regression"
+author: "Steve Paterson"
+date: "2024-05-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+wkdir <- "~/Dropbox/teaching/LIFE707/LIFE707_24_25/Topic_material/separate_topics/Topic_6"
+knitr::opts_knit$set(root.dir = wkdir)
+setwd(wkdir)
+library(tidyverse)
+
+```
+
+Go through the examples here. Tasks for you to do yourself are indicated, and are supported by answers and videos on Canvas, but please try for yourself first.
+
+## Two explanatory variables
+
+### *Drosophila* example
+
+Let's look at a regression example taken and edited from Faraway, (2004), p 174.
+
+This involves a classic experiment from Linda Partridge's lab on the cost of mating in the fly *Drosophila melanogaster*. Each sampling point consisted of a male fly for which the researchers measured longevity, as a potential cost of mating, and thorax length (in mm), which they knew to be important and which they wished to control for.
+
+The experimental procedures were as follows. Each male was allocated to one of five treatment groups, that is they were put into a vial containing: (i) a male by itself - 'isolated', (ii) one pregnant female, - 'one', (iii) eight pregnant females - 'many', (iv) one virgin female - 'low', or (v) eight virgin females - 'high'.
+
+The hypothesis tested is that mating reduces longevity of males. Thus, males will mate with virgin females but not pregnant females, so the 'one' and 'many' groups act as controls for the 'low' and 'high' groups, respectively.
+
+The reason for using multiple regression, though, is that the size of a fly also affects how long it lives. Multiple regression allows us to control for the size of a fly and to test their experiment treatments.
+
+Read in the fruitfly.txt file to a dataframe object called `fruitfly`.
+
+```{r, echo=FALSE}
+fruitfly <- read.table("fruitfly.txt",header=TRUE)
+```
+
+Remind yourself how to read in data from the previous topics if needed. The first few lines should look like:
+
+```{r}
+head(fruitfly)
+```
+
+Activity contains the 5 different treatment groups above. We can see this with the `table` command
+
+```{r}
+table(fruitfly$activity)
+```
+
+However, when the data are first read into R, activity is read in as a character string. To explicitly specify the column activity to be a factor, we can use
+
+```{r}
+fruitfly$activity <- factor(fruitfly$activity, levels = c("isolated","one","many","low","high"))
+```
+
+Here I've used the `levels` argument to put the treatment groups into an order that makes some sense based on the experiment (otherwise they would be read in alphabetically).
+
+Let's get a feel for the data by plotting it out. This is similar to some of the examples we plotted in Topic 2 using`ggplot`. We have thorax length and longevity, which are both continuous variables, in each of their 5 treatment groups. Longevity is the response variable (y variable) and we're interested in how thorax length and treatment (the explanatory variables) affect this.
+
+```{r}
+fly.plot1 <- ggplot(data=fruitfly, aes(x=thorax, y=longevity))
+
+#produce a scatterplot for each treatment level
+fly.plot1 + geom_point() +
+  xlab("Thorax length (mm)") + ylab("Longevity (days)") +
+  facet_wrap(~activity)
+```
+
+From looking at this, we probably see two patterns. The first is that bigger flies live longer. The second is that male flies in the high treatment group (having sex with lots virgin females) seem to have shorter lives. We next test these ideas formally using multiple regression.
+
+### Fitting a model
+
+From the video, recall that the multiple regression equation is simply:
+
+$$y = \alpha + \beta_{1} x_{1} + \beta_{2} x_{2} + ... + e$$
+
+In R, we can still use the `lm` function and just put a formula in the form of `y ~ x1 + x2`.
+
+Let's fit a model that has both thorax length and activity.
+
+```{r}
+ff1 <- lm(longevity ~ thorax + activity, data = fruitfly)
+summary(ff1)
+```
+
+Here we've fitted two terms, thorax and activity, but have fitted 5 coefficients plus the intercept. The reason is that activity is a 5-level factor. The way we've set it up, the first level is 'isolated', i.e. a male by itself. The other 4 levels are compared against this 'isolated' level.
+
+From the table above, we can see that the coefficient for thorax is positive; bigger flies live longer. We also see a significant, negative coefficient for the 'low' activity level and an even bigger negative coefficient for the 'high' activity level; this suggests that males put in a vial with a virgin female have a bit of a shorter life (by about 7 days) and a much shorter life if in a vial with 8 virgin females (by about 20 days). There is no evidence that putting males in with pregnant females shortens their life (the coefficients don't appear significant). Therefore sex reduces male lifespan and the more sex they have the shorter their lives are. (As a caveat, we'll discuss in a later topic that there are better ways of testing significance of coefficients than looking at the summary table, particularly in observational studies where variables often covary.)
+
+> *TASK*
+>
+> What is the expected lifespan of flies in the 'low' activity group and with thorax lengths of 0.75 and 0.85mm?
+>
+> The lifespan of flies in the 'high' activity group with thorax lengths of 0.75 and 0.85mm?
+>
+> The lifespan of flies in the 'isolated' activity group with thorax lengths of 0.75 and 0.85mm?
+>
+> You'll need to look at the coefficients produced from the model and calculate a prediction. You can check you're in the right ballpark by looking at the plot above.
+
+### Interactions
+
+So far, we've assumed that thorax length and treatment act independently. We can also fit a more complex model with interactions. An interaction in this case would assume that there are different slopes for longevity versus thorax for each treatment. An interaction here might mean something like 'sex reduces longevity, but only in small flies', which could be biologically plausible and is worth checking.
+
+We can specify this more complex model with the formula `longevity ~ thorax * activity`. The `*` part of the formula expands all combinations of thorax and activity to include the interactions and can also be written as `longevity ~ thorax + activity + thorax:activity`.
+
+```{r}
+ff2 <- lm(longevity ~ thorax * activity, data = fruitfly)
+summary(ff2)
+```
+
+Terms like 'thorax:activityone' refer to the coefficient the model fits to thorax in the 'one' treatment group. Although some of the coefficients for these interactions are quite large, so are their standard errors and so `summary` suggests none are significant.
+
+A more robust way to ask the question of whether the interactions are significant is to ask whether a model containing the interactions provides a significantly better fit of the data than a model that doesn't have the interactions. Thus, we've created a model `ff2`, which contains the interactions and the model `ff1`, which doesn't. Since the only explanatory terms that differ between the models are the interaction terms, comparing `ff2` versus `ff1` should give the significance of those interaction terms.
+
+We can compare the fit of the two models, using either the `anova` or `drop1` commands. With `anova` you explicitly tell R the pair of models that you want to compare. `drop1` assumes that you want to compare a pair of 'nested' models, i.e. compare the model you give to a simpler model from which the interaction term has been 'dropped'. To get a p-value for linear models we use an *F*-test, hence the `test="F"` argument.
+
+```{r}
+anova(ff2, ff1, test="F")
+
+```
+
+```{r}
+drop1(ff2, test="F")
+
+```
+
+In both cases it gives the p-value (0.99, not significant), based on an *F*-test with 4 and 114 degrees of freedom (*F*~4,114~=0.053). Although there are 5 levels, the 'isolated' level is subsumed into the intercept, so that the 'one', 'many', 'low' and 'high' levels are contrasted against the 'isolated' level. We will go through model selection and testing coefficients in more detail later.
+
+You also use `drop1` on the simpler ff1 model:
+
+```{r}
+drop1(ff1, test="F")
+```
+
+Here you get significant levels for each of the two main effects, thorax and activity. Thorax is a simple continuous variable, hence it has one degree of freedom associated with it. Activity is a 5 level factor, and as we saw above needs 4 coefficients fitted, hence it has 4 degrees of freedom. For both thorax and activity P\<0.001.
+
+> **TASK**
+>
+> Glycoside hydrolases able to metabolise starch were isolated from two different species of bacteria (A and B) and their activity in enzyme units (U or µmol/min) measured across a range of salt concentrations (percentage NaCl w/v). The data are within the file hydrolase.txt
+>
+> First plot out hydrolase activity vs salt concentration from the 2 species. Do these appear to have the same or different slopes in the two species?
+>
+> Perform an analyse to determine whether the slopes are statistically different.
+
+## Model selection
+
+A common problem, particularly in observational studies, is that you want to explain a particular trait given a lot of potential explanatory variables that you've measured. You want to able to say which explanatory variables are associated with the trait and which aren't. You may therefore want a model that (a) tells you what the important biology is and (b) predicts the value of the trait that you're interested in.
+
+### What makes a good model?
+
+-   A general problem that statistical modeling addresses is to extract the main biological features from a set of, often complex, data.
+
+-   Quite often one has a lot of potential explanatory variables that could influence the dependent variable one is interested in, but not all of them do, or at least not to any great extent.
+
+-   The trick is to determine which explanatory variables have a 'significant' effect and quantify the size of that effect.
+
+### Some points to consider
+
+A 'significant' effect can either mean statistical significance, i.e. a p-value. Or it can mean biological significance. For example, given a large enough data set,one might be able to find effects that are statistically significant effects but that still have very little influence on the dependent variable compared to some other, more major, effects.
+
+All models are wrong. In other words, all models are a representation of the data, and so are not in any sense 'true'. Any model is just one of many possible models; the process of model selection just tries to pick a model that's less wrong than other such models.
+
+Statistical models are merely tools to help you interpret patterns and test hypotheses. While one can generate these models in a systematic and sensible way, it's important to recognise the limitations of a statistical model and not confuse it with reality. This has sometimes been phrased as, 'don't fall in love with your model'.
+
+Be careful to try to distinguish what may be causality from association, particularly in observational studies. Think critically about how to interpret the results of the model.
+
+### Model simplification
+
+The basic philosophy is to follow [Occam's Razor](https://en.wikipedia.org/wiki/Occam%27s_razor); if you have two models, each with the same predictive power, you should prefer the simpler model.
+
+We'll principally use a method called deletion testing (sometimes called backwards selection) in order to select a model that is useful; i.e. one that has informative biological inference, but is not too complicated that we can't make any inference. Deletion testing begins by taking a complex model and tries to make that model simpler by successively removing non-significant terms. It's dealt with well by in Crawley's books (e.g. Crawley, M.J.(2005) Statistics: An introduction using R.). In the table below, the aim is to get from the maximal model to the minimal adequate model.
+
+Table 1. Definition of statistical models referred to in deletion testing.
+
+![](http://pcwww.liv.ac.uk/~stevep11/LIFE707/images/model_selection_table.png)
+
+### The process of deletion testing
+
+A flow diagram of the process of deletion testing, as suggested by Crawley, is shown in Figure 1. (Other methods have been proposed, e.g. using `step`, but the process below is a bit more stringent and less likely to retain terms that are not significant.)
+
+![](http://pcwww.liv.ac.uk/~stevep11/LIFE707/images/model_selection_figure.png)
+
+Figure 1. Flow diagram of model selection process.
+
+We've essentially done this already in the fruitfly example, but let's see the process using a slightly complex example.
+
+### Birthweight
+
+The file birthweight.csv contains data on birthweight plus various factors associated with the mother or the pregnancy for 42 babies. Read these data in.
+
+```{r, echo =FALSE}
+birthweight <- read.csv("birthweight.csv",header=TRUE)
+```
+
+It contains the following variables:
+
+-   *ID* Baby number
+
+-   *length* Length of baby (inches)
+
+-   *Birthweight* Weight of baby (lbs)
+
+-   *headcirumference* Head Circumference
+
+-   *Gestation* Gestation (weeks)
+
+-   *smoker* Mother smokes 1 = smoker 0 = non-smoker
+
+-   *motherage* Maternal age
+
+-   *mnocig* Number of cigarettes smoked per day by mother
+
+-   *mheight* Mothers height (inches)
+
+-   *mppwt* Mothers pre-pregnancy weight (lbs)
+
+-   *fage* Father's age
+
+-   *fedyrs* Father’s years in education
+
+-   *fnocig* Number of cigarettes smoked per day by father
+
+-   *fheight* Father's height (inches)
+
+-   *lowbwt* Low birth weight, 0 = No and 1 = yes
+
+-   *mage35* Mother over 35, 0 = No and 1 = yes
+
+```{r}
+summary(birthweight)
+```
+
+We won't analyse all of these here. Let's say that we're interested in birthweight and if or how it might be affected by 3 explanatory variables -- gestation, mother's age and smoking.
+
+It's good practice to consider whether the response variable in particular is normally distributed or not. This is a fairly small data set, so the histogram doesn't look particularly smooth, but we can probably accept that it's a continuous variable with a mean somewhere roughly in the middle of its distribution.
+
+```{r}
+p.bw <- ggplot(data=birthweight,aes(x=Birthweight))
+p.bw + geom_histogram(bins=10)
+p.bw + geom_density()
+```
+
+The next decision is what maximal model to start with. This decision introduces an arbitrary nature to the process, because where you start the deletion testing process may affect what model you arrive at. In fact, deciding what variables to measure in the study is also somewhat arbitrary. Bear in mind two things that we said above: that we're trying to get an understanding of the system, not necessarily produce the best statistical model we can and; second, that there may not be single right 'correct' model, but one that is useful.
+
+Smoking is probably important but it is coded in two ways. Whether a mother smokes or not, and how many cigarettes she smokes. How many cigarettes she smokes is therefore a strange variable because a lot of mothers smoke zero cigarettes. Fitting a coefficient to this might not cope well with its obviously non-normal distribution. It may be simpler to just consider the binary variable of whether a mother smokes or not (the variable 'smoker'). You can, if you like, investigate the distribution of the explanatory variables for smoking, gestation and mother's age.
+
+We can now define a maximal model containing the variables 'Gestation', 'motherage' and 'smoker'. We also need to include the interactions between them. In the model formula, the specification `(Gestation + smoker + motherage)^2` is a simple way to say we want the 3 main effects of each variable plus all possible 2-way interactions between them; i.e. it's equivalent to `Gestation + smoker + motherage + Gestation:smoker + Gestation:motherage + smoker:motherage`. Of course this looks complicated; this is the point of a maximal model. We create this complicated model in order to systematically simplify it and discover what's important.
+
+```{r}
+mod.max1 <- lm(Birthweight ~ (Gestation + smoker + motherage)^2, data = birthweight)
+summary(mod.max1)
+
+```
+
+It's probably also sensible to check that there aren't any glaring problems with the model by running `plot(mod.max1)`.
+
+```{r, echo = FALSE}
+par(mfrow=c(2,2))
+plot(mod.max1)
+par(mfrow=c(1,1))
+```
+
+There's nothing here I'd worry about, especially given we have a fairly low number of data points, so let's proceed with model simplification. Use `drop1` to start to test the terms in the maximal model.
+
+```{r}
+drop1(mod.max1, test="F")
+```
+
+Here you see the specification of the maximal model followed by the significance of each successive term tested by `drop1`. `drop1` tests each term in turn by dropping it from the model and seeing what impact it has in explanatory power, judged by an *F* test. The rule followed by `drop1` is that it will drop interaction terms, but not lower order terms that are contained by an interaction term present in the model. For example, `drop1` tests the interaction term smoker:motherage but does not test (drop) the main effects smoker and motherage since these are contained within the interaction term.
+
+One can also see what `drop1` does by the more manual method:
+
+```{r}
+tmp <- update(mod.max1, .~. - smoker:motherage) 
+anova(mod.max1,tmp,test="F")
+```
+
+`update` here looks at the object mod.max1 and produces a new model based on its formula (`.~.`) minus the term smoker:motherage and creates a new object tmp. (I often name objects 'tmp' that I'm not going to keep for long.). `anova(model1, model2, test="F")` compares two nested models (i.e. models that only differ by a single term) and performs an *F* test on them. You can see the p-value and F-value are equivalent to the last line from `drop1` above.
+
+Consider again the result from
+
+```{r}
+drop1(mod.max1, test="F")
+```
+
+Are there any terms where p \> 0.05. If so, which is *least* significant term above? This is the term with the highest p-value (and lowest F value), smoker:motherage. The `update` function above shows how to delete a single term. So we can delete smoker:motherage (p=0.64) and try `drop1` again. (The model simplification will see us generating successively simpler models using `update`, which I'm going to call m1.1, m1.2, etc.)
+
+```{r}
+m1.1 <- update(mod.max1, .~. - smoker:motherage)
+drop1(m1.1, test= "F")
+```
+
+So Gestation:motherage is both insignificant and the least significant. So we repeat this process. It is important to only drop one term at a time, since during the process something that previously didn't seem significant can become significant in a simpler model.
+
+Remember as you go along to change the model you're updating to the model you created in the previous step. It's easy to make mistakes, so take your time...
+
+```{r}
+m1.2 <- update(m1.1, .~. - Gestation:motherage)
+drop1(m1.2, test= "F")
+
+```
+
+Now repeat this process yourself. The next term you should drop is motherage. Although it is a main effect, it is not part of the Gestation:smoker interaction. Carry on until no further terms can be dropped.
+
+```{r, echo = FALSE}
+m1.3 <- update(m1.2, .~. - motherage)
+#drop1(m1.3, test= "F")
+m1.4 <- update(m1.3, .~. - Gestation:smoker)
+#drop1(m1.4, test= "F")
+```
+
+Now run `drop1` and `summary` on your final model (the minimal adequate model). You should get something like:
+
+```{r}
+drop1(m1.4, test= "F")
+summary(m1.4)
+```
+
+What this says is that both Gestation and whether a mother smokes are significant terms affecting birthweight. But there is no interaction between the two. From the sign of the coefficients in the summary table, birthweight increases with gestation time and birthweight is reduced in mothers who smoke. To see this, we can put what we learnt in data visualisation to good use. There's a really strong effect of gestation time on birth weight. From the plot (and the positive coefficient for Gestation in the minimal model) we see that babies born later are heavier. There's also a noticeable effect of smoking. The coefficient in the model is negative, indicating that babies are born lighter to mothers who smoke.
+
+```{r}
+#what to plot
+bw.plot1 <- ggplot(data=birthweight, aes(x=Gestation,y=Birthweight))
+
+#how to plot it, Birthweight vs Gestation, split by smoker or not
+bw.plot1 + geom_point() + facet_wrap(~smoker) +
+  xlab("Gestation (weeks)") + ylab("Birthweight (lbs)") +
+  theme_bw() 
+```
+
+> *TASK*
+>
+> Generate a minimal adequate model from the following maximal model
+>
+> `lm(Birthweight ~ (Gestation + smoker + mppwt)^2, data = birthweight)`
+>
+> Comment on the importance of mother's prepregnancy weight (mppwt).
+
+> *TASK*
+>
+> The file haemoglobin.csv contains data on haemoglobin levels in the blood from alpha thalasaemia carriers and normal controls (neither have disease symptoms).\
+>
+> -   sex; male/female
+>
+> -   phenotype; alpha_carrier/normal
+>
+> -   pcv; packed cell volume (percentage)
+>
+> -   rbc; red blood cell count (10^12^/L)
+>
+> -   lymph; white blood cell count (10^6^/L)
+>
+> -   hb; haemoglobin concentration (g/dL)
+>
+> Using hb as the response variable explore which, if any, of the other variables is associated with haemoglobin concentration. Produce a table of your model and a plot of your results and briefly comment on the biological interpretation.
