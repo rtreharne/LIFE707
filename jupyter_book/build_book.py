@@ -286,7 +286,10 @@ def build():
         if not source.exists():
             raise RuntimeError(f"Cycle 1 master data file is missing: {source}")
     environment = {**os.environ, "JB_ALLOW_NODEENV": "yes"}
-    subprocess.run([str(ROOT / ".venv" / "bin" / "jupyter"), "book", "build", "--html", "--strict"], check=True, cwd=BOOK, env=environment)
+    # Invoke the installed module through the active Python interpreter. This
+    # works in the GitHub Actions Linux venv and on local Windows installs,
+    # where the `.venv/bin/jupyter` path is not available.
+    subprocess.run([sys.executable, "-m", "jupyter_book", "build", "--html", "--strict"], check=True, cwd=BOOK, env=environment)
 
 
 if __name__ == "__main__":

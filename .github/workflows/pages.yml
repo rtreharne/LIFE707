@@ -20,17 +20,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
       - name: Install the book builder
         run: |
           python -m venv .venv
           .venv/bin/pip install -r jupyter_book/requirements.txt
       - name: Build the book
-        run: BASE_URL="/${{ github.event.repository.name }}" .venv/bin/python jupyter_book/build_book.py build
+        env:
+          BASE_URL: "/${{ github.event.repository.name }}"
+          JB_ALLOW_NODEENV: "yes"
+        run: |
+          set -o pipefail
+          .venv/bin/python jupyter_book/build_book.py build 2>&1 | tee build.log
+      - name: Publish build diagnostics
+        if: failure()
+        run: |
+          {
+            echo "### LIFE707 book build failure"
+            echo '```text'
+            tail -n 200 build.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
       - name: Upload the Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
