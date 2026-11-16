@@ -46,7 +46,7 @@ Go through the examples here. Tasks for you to do yourself are indicated, and ar
 
 ### *Drosophila* example
 
-Let's look at a regression example taken and edited from Faraway, (2004), p 174.
+Let's look at a regression example taken and edited from <a href="https://liverpool.primo.exlibrisgroup.com/nde/fulldisplay?vid=44LIV_INST:NDE&search-location=library&tab=Everything&search_scope=MyInst_and_CI&lang=en&query=linear%20models%20with%20R&docid=alma991023374079307351&adaptor=Local%20Search%20Engine&context=L&isFrbr=false&isHighlightedRecord=false&state=">Faraway (2004, p. 174)</a>.
 
 This involves a classic experiment from Linda Partridge's lab on the cost of mating in the fly *Drosophila melanogaster*. Each sampling point consisted of a male fly for which the researchers measured longevity, as a potential cost of mating, and thorax length (in mm), which they knew to be important and which they wished to control for.
 
@@ -56,7 +56,7 @@ The hypothesis tested is that mating reduces longevity of males. Thus, males wil
 
 The reason for using multiple regression, though, is that the size of a fly also affects how long it lives. Multiple regression allows us to control for the size of a fly and to test their experiment treatments.
 
-Read in the fruitfly.txt file to a dataframe object called `fruitfly`.
+Read in the <a href="/data/topic-6-multiple-regression/fruitfly.txt?download=1">fruitfly.txt</a> file to a dataframe object called `fruitfly`.
 
 ```r
 fruitfly <- read.table("fruitfly.txt",header=TRUE)
@@ -283,7 +283,7 @@ Here you get significant levels for each of the two main effects, thorax and act
 
 ### Exercise 2: Hydrolase slopes
 
-Glycoside hydrolases able to metabolise starch were isolated from two different species of bacteria (A and B) and their activity in enzyme units (U or µmol/min) measured across a range of salt concentrations (percentage NaCl w/v). The data are within the file hydrolase.txt
+Glycoside hydrolases able to metabolise starch were isolated from two different species of bacteria (A and B) and their activity in enzyme units (U or µmol/min) measured across a range of salt concentrations (percentage NaCl w/v). The data are within the file <a href="/data/topic-6-multiple-regression/hydrolase.txt?download=1">hydrolase.txt</a>.
 
 First plot out hydrolase activity vs salt concentration from the 2 species. Do these appear to have the same or different slopes in the two species?
 
@@ -340,7 +340,7 @@ We've essentially done this already in the fruitfly example, but let's see the p
 
 ### Birthweight
 
-The file birthweight.csv contains data on birthweight plus various factors associated with the mother or the pregnancy for 42 babies. Read these data in.
+The file <a href="/data/topic-6-multiple-regression/birthweight.csv?download=1">birthweight.csv</a> contains data on birthweight plus various factors associated with the mother or the pregnancy for 42 babies. Read these data in.
 
 ```r
 birthweight <- read.csv("birthweight.csv",header=TRUE)
@@ -604,6 +604,40 @@ drop1(m1.4, test= "F")
 summary(m1.4)
 ```
 
+:::{dropdown} Show expected output
+```text
+## Single term deletions
+##
+## Model:
+## Birthweight ~ Gestation + smoker
+##            Df Sum of Sq    RSS     AIC F value    Pr(>F)
+## <none>                 32.046 -5.3603
+## Gestation  1    33.530 65.577 22.7131 40.8057 1.499e-07 ***
+## smoker     1     4.285 36.332 -2.0891  5.2151   0.02792 *
+## ---
+## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+##
+## Call:
+## lm(formula = Birthweight ~ Gestation + smoker, data = birthweight)
+##
+## Residuals:
+##      Min       1Q   Median       3Q      Max
+## -1.39289 -0.67992  0.04221  0.55308  2.41978
+##
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  -5.8675     2.1320  -2.752  0.00894 **
+## Gestation     0.3437     0.0538   6.388  1.5e-07 ***
+## smoker       -0.6425     0.2813  -2.284  0.02792 *
+## ---
+## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+##
+## Residual standard error: 0.9065 on 39 degrees of freedom
+## Multiple R-squared:  0.558, Adjusted R-squared:  0.5353
+## F-statistic: 24.61 on 2 and 39 DF, p-value: 1.22e-07
+```
+:::
+
 What this says is that both Gestation and whether a mother smokes are significant terms affecting birthweight. But there is no interaction between the two. From the sign of the coefficients in the summary table, birthweight increases with gestation time and birthweight is reduced in mothers who smoke. To see this, we can put what we learnt in data visualisation to good use. There's a really strong effect of gestation time on birth weight. From the plot (and the positive coefficient for Gestation in the minimal model) we see that babies born later are heavier. There's also a noticeable effect of smoking. The coefficient in the model is negative, indicating that babies are born lighter to mothers who smoke.
 
 ```r
@@ -616,7 +650,40 @@ bw.plot1 + geom_point() + facet_wrap(~smoker) +
   theme_bw() 
 ```
 
-![Birthweight by gestation and maternal smoking](assets/topic-6/figure-unnamed-chunk-24-1.png)
+![Birthweight observations by gestation and maternal smoking](assets/topic-6/figure-unnamed-chunk-24-1.png)
+
+Because the minimal model has no interaction, it estimates the same gestation
+slope for both smoking groups, with a different intercept for smokers. We can
+draw these two fitted lines directly from the model coefficients:
+
+```r
+# Extract the fitted coefficients from the minimal model.
+bw.coef <- coef(m1.4)
+
+# The model uses one shared Gestation slope. Add the smoker coefficient to
+# the intercept only for smoker = 1, giving each group its own line.
+bw.lines <- data.frame(
+  smoker = c(0, 1),
+  intercept = unname(bw.coef["(Intercept)"] + c(0, 1) * bw.coef["smoker"]),
+  slope = unname(bw.coef["Gestation"])
+)
+
+# Add the model lines to the points; facet_wrap places each line in its group.
+bw.plot1 + geom_point() +
+  geom_abline(data = bw.lines,
+              aes(intercept = intercept, slope = slope),
+              color = "blue", linewidth = 1, inherit.aes = FALSE) +
+  facet_wrap(~smoker) +
+  xlab("Gestation (weeks)") + ylab("Birthweight (lbs)") +
+  theme_bw()
+```
+
+![Birthweight observations with fitted lines from the minimal model](assets/topic-6/birthweight-minimal-model-lines.png)
+
+The two fitted lines are parallel because the model contains no interaction.
+Both slope upward: predicted birthweight increases with gestation. The smoker
+line sits about 0.64 lb below the non-smoker line across the range, reflecting
+the model's estimated smoking coefficient while holding gestation constant.
 
 ### Exercise 3: Birthweight model selection
 
@@ -629,7 +696,7 @@ Comment on the importance of mother's prepregnancy weight (mppwt).
 
 ### Exercise 4: Haemoglobin model selection
 
-The file haemoglobin.csv contains data on haemoglobin levels in the blood from alpha thalasaemia carriers and normal controls (neither have disease symptoms).\
+The file <a href="/data/topic-6-multiple-regression/haemoglobin.csv?download=1">haemoglobin.csv</a> contains data on haemoglobin levels in the blood from alpha thalasaemia carriers and normal controls (neither have disease symptoms).\
 
 -   sex; male/female
 
@@ -701,19 +768,17 @@ Predicted longevity = -48.749 + 134.341 \* 0.85 = 65.44 days
 
 ### Exercise 2: Hydrolase slopes
 
-The numbered block follows the workflow described below: lines 1–2 read and inspect the data, lines 4–5 define the factor, lines 7–10 make the plot, lines 12–15 fit and test the interaction, and lines 17–19 check diagnostics.
-
 ```{code-block} r
 :linenos:
 hydrolase <- read.table("hydrolase.txt",header=TRUE)
 head(hydrolase)
 
 hydrolase$species <- factor(hydrolase$species, levels=c("A","B")) 
-#levels argument redundant, since levels are assigned alphabetically, but good practice
+# A is the reference level, so coefficients compare species B with species A.
 
 hydro.plot1 <- ggplot(data=hydrolase, aes(x=salt, y=activity))
 
-hydro.plot1 + geom_point() + 
+hydro.plot1 + geom_point() + geom_smooth(method="lm", se=FALSE) +
   facet_wrap(~species) + 
   xlab("Salt concentration (w/v)") + ylab("Hydrolase activity (U)")
 
@@ -727,26 +792,35 @@ plot(hydro.mod)
 par(mfrow=c(1,1))
 ```
 
-Lines 1–2 read the file and inspect its first rows.
+The first two commands load the data and inspect a few rows. Converting
+`species` to a factor sets species A as the reference group. The faceted plot
+shows the observations and a fitted line for each species, making their trends
+easy to compare.
 
-Lines 4–5 define `species` as a factor.
+The model includes species, salt concentration, and their interaction. The
+interaction allows the salt slope to differ between species. `summary()` shows
+the fitted coefficients, while `drop1()` tests whether removing the interaction
+significantly worsens the model. The diagnostic plots are used to check model
+assumptions; they are not the main results plot.
 
-Lines 7–10 produce the plot used to compare the two species.
-
-The plot from lines 7–10 suggests that the slopes differ, so an interaction is plausible.
-
-Lines 12–15 fit the model and test the interaction; `drop1` tests the interaction term rather than the main effects.
-
-The output from lines 13–15 confirms the interaction suggested by the plot.
-
-Lines 17–19 check the model diagnostics. This plot is for checking the model, rather than for including in a report.
+**Interpretation:** The interaction is strong (F = 79.3, p < 0.001), so the
+relationship between salt concentration and hydrolase activity differs by
+species. For species A, activity falls by about 0.89 units for each 1 percentage
+point increase in salt. For species B, the estimated slope is about +0.39 units
+per percentage point. Across the measured range, higher salt is associated with
+lower activity in species A and higher activity in species B. In other words,
+the two species respond in opposite ways under these experimental conditions;
+a single shared slope would hide that difference.
 
 ### Exercise 3: Birthweight model selection
 
-The numbered block follows the model-selection sequence: lines 1–2 load the data, lines 4–5 fit the maximal model, and the later lines perform deletion testing, prediction checks, and plotting.
+#### One possible solution: manual selection with F-tests
 
-```{code-block} r
-:linenos:
+Start with the maximal model, then remove one term at a time, checking the
+remaining terms after each change. This follows the 0.05 significance threshold
+used in the workshop.
+
+```r
 birthweight <- read.csv("birthweight.csv",header=TRUE)
 
 bw.max <- lm(Birthweight ~ (Gestation + smoker + mppwt)^2, data = birthweight)
@@ -768,153 +842,191 @@ summary(bw.mod.3)
 par(mfrow=c(2,2))
 plot(bw.mod.3)
 par(mfrow=c(1,1))
-
-#starting again from the maximal model
-bw.step.1 <- step(bw.max)
-drop1(bw.step.1, test ="F") # still has smoker:mppwt
-
-bw.step.2 <- update(bw.step.1, .~. - smoker:mppwt)
-drop1(bw.step.2, test="F")
-
-summary(birthweight$Gestation)
-
-summary(birthweight$mppwt)
-
-#what to plot
-bw.plot2 <- ggplot(data = birthweight, aes(x=Gestation, y=Birthweight, color=mppwt))
-
-#how to plot it (this is just the code from the workshop)
-bw.plot2 + geom_point(size=4) + facet_wrap(~smoker) +
-  xlab("Gestation (weeks)") + ylab("Birthweight (lbs)") +
-  theme_bw() +scale_color_gradient(low="blue", high="red")
 ```
 
-Lines 4–5 start with the maximal model.
+The F-tests suggest removing the three interactions in turn. The final model
+retains Gestation, smoker, and mppwt as main effects. This is one valid model
+selection route; other approaches may produce a different model.
 
-Lines 7–8 test which term should be dropped first.
-
-None of terms is significant, but Gestation:mppwt is the least significant so we drop this first. We can do this with the `update` function.
-
-Lines 10–11 test the updated model again.
-
-Next term to drop is Gestation:smoker. Take your time to keep track of each model name and term to be dropped. It's easy to make mistakes during this.
-
-smoker:mppwt isn't quite significant. Drop it.
-
-By lines 13–16, all remaining terms are significant, so we have reached the minimal model.
-
-We can check what it looks like with `summary(bw.mod.3)` and `plot(bw.mod.3)`:
-
-This is relatively OK given we have a fairly small number of data points.
-
-------------------------------------------------------------------------
-
-### Alternate approach
-
-You can also use the `step` function to cut out some of the steps, but it will keep the smoker:mppwt and has to be nudged along from there.
-
-This gets us to the same minimal adequate model as before.
-
-> Comment on the importance of mother's prepregnancy weight (mppwt).
-
-From the model, mppwt (mother's weight) is statistically significant at the 5% level but not the 1% level. This is one measure of 'significance'. But biological significance might also be considered if you want to ask how 'important' is mother's weight for birth weight. One way to do this is to predict from the model what weight of baby we expect from two mothers of different weights. The summary of the model (`summary(bw.mod.3)`) give us the formula of the model:
-
-`birthweight ~ -7.165 + 0.313*Gestation (weeks) -0.665*smoker + 0.0198*mppwt`
-
-We just need to find some sensible values to plus into the model.
-
-First, what's a typical gestation time?
-
-Let's take the median gestation time of 39.5 weeks.
-
-Second, what are sensible weights to give the model for a 'light' mother and a 'heavy' mother?
-
-Using the interquartile range we could use a value for a 'light' mother as 115lbs and a 'heavy' mother as 135lbs. The language of 'light' and 'heavy' is problematic and comes with some social baggage. By picking the interquartile range (containing half of the women in the study), these are women who are both within the typical range of weights, but just a bit lighter than average or a bit heavier than average.
-
-Let's make things a bit easier by predicting birth weight from non-smokers, since that term will go to zero in the model (`-0.665*0 = 0`). So for intercept + gestation + mother's age:
-
-A 115 lb mother giving birth at 39.5 weeks could expect a baby of
-
--7.165 + 0.313 \* 39.5 + 0.0198 \* 115 = 7.48 lbs
-
-A 135 lb mother giving birth at 39 weeks could expect a baby of
-
--7.165 + 0.313 \* 39.5 + 0.0198 \* 135 = 7.87 lbs
-
-So there's some difference (\~0.4 lbs), but not huge.
-
-The same approach for gestation time, taking the median for mother's weight and the interquartile range for gestation time as 38 - 41 weeks, gives a bigger difference (nearly 1 lb). It's more obvious biological effect that the longer a baby grows inside mum the bigger it gets when it finally comes out.
-
--7.165 + 0.313 \* 38 + 0.0198 \* 125 = 7.20 lbs
-
--7.165 + 0.313 \* 41 + 0.0198 \* 125 = 8.14 lbs
-
-(You can also investigate `predict.lm`, which can take a data frame of dummy values without having to manually do the prediction.)
-
-Some of you have probably tried plotting the model, which is the challenge of plotting Birthweight \~ Gestation + mppwt + smoker, i.e. how is birthweight affected by gestation time and mother's weight and whether she's a smoker or not. I struggled to come up with a very convincing plot, largely because the effect of mother's weight is fairly small. In the material, we saw how to use `ggplot` to visualise Birthweight \~ Gestation + smoker so now we need to work out how to add mppwt to this. One way, which uses code that you've (mostly) already learnt, is to use colour for mppwt.
+**Interpretation:** Holding the other variables constant, birthweight is
+associated with longer gestation and greater maternal prepregnancy weight, and
+is lower for babies of mothers who smoked. For example, the model predicts
+about a 0.4 lb difference between maternal weights of 115 and 135 lb at 39.5
+weeks for non-smokers. These are adjusted associations in this dataset, not
+proof of causation.
 
 ### Exercise 4: Haemoglobin model selection
 
-The numbered block follows the analysis sequence: lines 1–2 load the data, lines 4–5 set factors, the middle lines fit and simplify the model, and the final lines produce diagnostic and explanatory plots.
+When there are more than two explanatory variables to explore, it can quickly
+get messy to assess every combination by eye. The strategy here gives you a
+repeatable way to explore a new dataset: start with a model containing the
+candidate variables and their interactions, then use F-tests and one-at-a-time
+model updates to identify which terms are important.
 
-```{code-block} r
-:linenos:
-haem <- read.csv("/haemoglobin.csv")
+Start with a maximal model containing all five explanatory variables and their
+two-way interactions. Then use `drop1()` to test removable terms. At each step,
+remove the eligible term with the largest p-value if it is above 0.05, update
+the model, and run `drop1()` again. This keeps the selection rule visible and
+ensures that only one term is removed at a time.
+
+```r
+haem <- read.csv("haemoglobin.csv")
 
 summary(haem)
 
 haem$sex <- factor(haem$sex)
 haem$phenotype <- factor(haem$phenotype)
 
-heam.max1 <- lm(hb ~ (sex + phenotype +pcv + rbc + lymph)^2, data = haem)
+haem.max <- lm(hb ~ (sex + phenotype + pcv + rbc + lymph)^2, data = haem)
 
 par(mfrow=c(2,2))
-plot(heam.max1)
+plot(haem.max)
 par(mfrow=c(1,1))
 
-haem.m1 <- step(heam.max1)
+drop1(haem.max, test="F")
 
+# Remove the largest non-significant removable term, then test again.
+haem.m1 <- update(haem.max, . ~ . - sex:rbc)
 drop1(haem.m1, test="F")
 
-haem.m2 <- update(haem.m1, .~. - lymph)
-drop1(haem.m2, test = "F")
+haem.m2 <- update(haem.m1, . ~ . - sex:phenotype)
+drop1(haem.m2, test="F")
 
-summary(haem.m2)
+haem.m3 <- update(haem.m2, . ~ . - sex:lymph)
+drop1(haem.m3, test="F")
 
-haem.plot1 <- ggplot(data=haem, aes(x=pcv,y=hb, color=sex))
+haem.m4 <- update(haem.m3, . ~ . - phenotype:lymph)
+drop1(haem.m4, test="F")
 
+haem.m5 <- update(haem.m4, . ~ . - sex:pcv)
+drop1(haem.m5, test="F")
+
+haem.m6 <- update(haem.m5, . ~ . - phenotype:rbc)
+drop1(haem.m6, test="F")
+
+haem.m7 <- update(haem.m6, . ~ . - rbc:lymph)
+drop1(haem.m7, test="F")
+
+haem.m8 <- update(haem.m7, . ~ . - pcv:rbc)
+drop1(haem.m8, test="F")
+
+haem.m9 <- update(haem.m8, . ~ . - rbc)
+drop1(haem.m9, test="F")
+
+haem.m10 <- update(haem.m9, . ~ . - phenotype:pcv)
+drop1(haem.m10, test="F")
+
+haem.m11 <- update(haem.m10, . ~ . - phenotype)
+drop1(haem.m11, test="F")
+
+haem.m12 <- update(haem.m11, . ~ . - pcv:lymph)
+drop1(haem.m12, test="F")
+
+haem.m13 <- update(haem.m12, . ~ . - lymph)
+drop1(haem.m13, test="F")
+
+summary(haem.m13)
+
+haem.plot1 <- ggplot(data=haem, aes(x=pcv, y=hb, color=sex))
 haem.plot1 + geom_point() + facet_wrap(~sex) +
-  xlab("Packed cell volume (%age)") + ylab("Haemoglobin concentration (g/dL)")
+  xlab("Packed cell volume (%)") + ylab("Haemoglobin concentration (g/dL)")
 
-haem.plot2 <- ggplot(data=haem, aes(x=sex,y=hb))
-
+haem.plot2 <- ggplot(data=haem, aes(x=sex, y=hb))
 haem.plot2 + geom_boxplot() + ylab("Haemoglobin concentration (g/dL)")
 ```
 
-Read the data in with `haem <- read.csv("haemoglobin.csv")`.
+The interaction terms are tested first. Some main effects are temporarily
+protected from deletion while they are part of a remaining interaction; once
+those interactions are removed, `drop1()` can test the main effects too. In
+this sequence, the final model is `hb ~ sex + pcv`.
 
-Set sex and phenotype as factors
+:::{dropdown} Show expected output for the final model
+```text
+## Single term deletions
+##
+## Model:
+## hb ~ sex + pcv
+##       Df Sum of Sq    RSS    AIC F value  Pr(>F)
+## <none>              100.60 -126.39
+## sex    1      2.36 102.96 -123.83   4.5513 0.03415 *
+## pcv    1    391.47 492.07  184.34 754.9215 < 2e-16 ***
+##
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  1.03307    0.39161   2.638  0.00902 **
+## sexmale      0.22672    0.10627   2.133  0.03415 *
+## pcv          0.29787    0.01084  27.476  < 2e-16 ***
+##
+## Residual standard error: 0.7201 on 194 degrees of freedom
+## Multiple R-squared:  0.8115, Adjusted R-squared:  0.8095
+## F-statistic: 417.5 on 2 and 194 DF, p-value: < 2.2e-16
+```
+:::
 
-Remember that hb is the dependent variable. To quickly check it looks roughly normally distributed you can use `hist(haem$hb)` or similar.
+Both packed cell volume (PCV) and sex remain associated with haemoglobin
+concentration after accounting for each other. The estimated PCV coefficient
+is about 0.298 g/dL per percentage-point increase in PCV. At the same PCV, the
+model estimates haemoglobin to be about 0.227 g/dL higher for males than
+females. The sex difference is modest compared with the overall spread in
+haemoglobin values. The phenotype, red blood cell count, and lymphocyte count
+do not improve this model enough to remain under the sequential 0.05 F-test
+rule. These are adjusted associations in this dataset; the model alone does
+not establish why the differences occur.
 
-Now we can work out which explanatory variables are important. The easiest thing to do is to set up a maximal model with all the other variables and their 2-way interactions as explanatory variables.
+#### Alternative: use `step()` to shorten model selection
 
-Quickly check the model looks sensible with `plot(heam.max1)`
+`step()` can reduce the number of manual updates. By default it uses AIC, so
+its selection rule differs from the sequential 0.05 F-test rule above. On this
+dataset it removes the interactions and most main effects, leaving `sex`,
+`pcv`, and `lymph`. The F-test then shows that `lymph` can also be removed
+(p = 0.151). Removing it gives the same final model as the manual sequence.
 
-I'll use the `step` approach to save some code, but it's fine if you want to go all the way through with update.
+:::{note} What is AIC?
+The **Akaike information criterion (AIC)** compares candidate models by
+balancing fit against complexity. For models fitted to the same data, a lower
+AIC is preferred. It is not a p-value and has no 0.05 cutoff.
 
-`step` has done the hard work but we we still need to remove lymph
+Using `step()` is not automatically safer or more correct than the manual
+approach. It is a quicker, consistent search, but its result depends on the
+starting model and the variables you include. Use biological knowledge to
+choose candidate variables and check that the selected model makes sense.
+:::
 
-So we've arrived at a minimal model since nothing can be removed from this. Let's look at it with `summary`.
+```r
+# Start from the maximal model fitted above.
+haem.step <- step(haem.max)
+drop1(haem.step, test = "F")
 
-Sex and pcv are both significant. None of the interactions are. The alpha thalasaemia genotype is not significant (though remember this is just between carriers and controls, there are no homozygote, affected individuals).
+# lymph has p > 0.05, so remove it to match the manual F-test approach.
+haem.step.final <- update(haem.step, . ~ . - lymph)
+summary(haem.step.final)
+```
 
-Sex F~1,194~ = 4.55, p \< 0.05. pcv F~1,194~ = 754.92, p \< 0.001. To get the F values use the output from `drop1`. Each term has one degree of freedom associated with it. The residual 194 degrees of freedom you can see from `summary((haem.m2)` or `anova((haem.m2)`.
+:::{dropdown} Show expected output
+```text
+## Call:
+## lm(formula = hb ~ sex + pcv, data = haem)
+##
+## Residuals:
+##      Min       1Q   Median       3Q      Max
+## -1.95976 -0.44614 -0.03527  0.51556  1.84386
+##
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  1.03307    0.39161   2.638  0.00902 **
+## sexmale      0.22672    0.10627   2.133  0.03415 *
+## pcv          0.29787    0.01084  27.476  < 2e-16 ***
+## ---
+## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+##
+## Residual standard error: 0.7201 on 194 degrees of freedom
+## Multiple R-squared:  0.8115, Adjusted R-squared:  0.8095
+## F-statistic: 417.5 on 2 and 194 DF, p-value: < 2.2e-16
+```
+:::
 
-To plot this out
-
-Here you can see a really strong effect of packed cell volume on haemoglobin concentration, which makes sense. However, the *direct* effect of sex on hb is quite subtle. From the model, being a male increases your haemoglobin concentration by only 0.23 g/dL . This is small compared to the natural range of haemoglobin concentration, e.g. an interquartile range (use `summary(haem$hb)`) of \~ 11-13g/dL. Visually, this only shifts the intercept on the right hand graph on the plot above by a small amount. **But**, this is after pcv is controlled for. You can see from the plot that males, for whatever reason, can have higher packed cell volume and in turn this gives them higher average haemoglobin concentration than females. Just looking at haemoglobin concentration versus sex would miss this.
-
+This reaches the same minimal model as the manual approach above, but with
+fewer update steps.
 
 
 ## Getting help
@@ -922,3 +1034,7 @@ Here you can see a really strong effect of packed cell volume on haemoglobin con
 Bring the exact error message, your R script, and the relevant data file to a
 workshop or a drop-in session. A screenshot is useful too. Keeping each topic's
 files together lets us help you find and fix problems quickly.
+
+## References
+
+Faraway, J. J. (2004). *[Linear Models with R](https://liverpool.primo.exlibrisgroup.com/nde/fulldisplay?vid=44LIV_INST:NDE&search-location=library&tab=Everything&search_scope=MyInst_and_CI&lang=en&query=linear%20models%20with%20R&docid=alma991023374079307351&adaptor=Local%20Search%20Engine&context=L&isFrbr=false&isHighlightedRecord=false&state=)*. Chapman & Hall/CRC. DOI: 10.4324/9780203507278.
