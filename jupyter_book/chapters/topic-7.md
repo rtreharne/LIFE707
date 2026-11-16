@@ -194,7 +194,7 @@ Some of the common types of data you might see are:
 Complete the **What's my distribution?** quiz before moving on. Choose an
 answer for each question to receive immediate feedback.
 
-<iframe id="distribution-quiz-frame" src="/assets/topic-7/distribution-quiz.html?v=4" title="What's my distribution? interactive quiz" style="width: 100%; height: 650px; overflow: auto; border: 2px solid #64748b; border-radius: 0.5rem;" scrolling="yes" loading="lazy"></iframe>
+<iframe id="distribution-quiz-frame" src="../../assets/topic-7/distribution-quiz.html?v=4" title="What's my distribution? interactive quiz" style="width: 100%; height: 650px; overflow: auto; border: 2px solid #64748b; border-radius: 0.5rem;" scrolling="yes" loading="lazy"></iframe>
 
 <style>
 .distribution-quiz {
