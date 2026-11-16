@@ -5,8 +5,7 @@ authors:
 date: 2024-05-30
 ---
 
-*This chapter follows the Topic 6 workshop material and includes the worked
-solutions at the end so that you can attempt each task before checking it.*
+*Updated by Dr. Robert Treharne on 16 November 2026.*
 
 :::{important}
 Complete [Topic 5 Part II: Linear Regression](topic-5-linear-regression.md)
@@ -15,10 +14,9 @@ models with more than one explanatory variable, interactions, and model
 selection.
 :::
 
-## Files for Topic 6
+## Files for this Week
 
 Create a `LIFE707/Topic_6` folder and download the files before starting.
-They are included with this book, so you do not need to return to Canvas.
 
 - <a href="/data/topic-6-multiple-regression/fruitfly.txt?download=1">Fruitfly data (fruitfly.txt)</a>
 - <a href="/data/topic-6-multiple-regression/hydrolase.txt?download=1">Hydrolase data (hydrolase.txt)</a>
@@ -814,7 +812,7 @@ a single shared slope would hide that difference.
 
 ### Exercise 3: Birthweight model selection
 
-#### One possible solution: manual selection with F-tests
+**One possible solution: manual selection with F-tests**
 
 Start with the maximal model, then remove one term at a time, checking the
 remaining terms after each change. This follows the 0.05 significance threshold
@@ -973,7 +971,7 @@ do not improve this model enough to remain under the sequential 0.05 F-test
 rule. These are adjusted associations in this dataset; the model alone does
 not establish why the differences occur.
 
-#### Alternative: use `step()` to shorten model selection
+**Alternative: use `step()` to shorten model selection**
 
 `step()` can reduce the number of manual updates. By default it uses AIC, so
 its selection rule differs from the sequential 0.05 F-test rule above. On this

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What's my distribution?</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; }
+    html, body { overflow-y: auto; }
+    body { margin: 0; color: #263238; line-height: 1.5; }
+    .quiz { border: 1px solid #d1d5db; border-radius: .5rem; padding: 1rem 1.25rem; }
+    .question { margin-top: 1.25rem; padding-top: 1.25rem; }
+    .question:first-child { margin-top: 0; padding-top: 0; }
+    .question:not(.active) { display: none; }
+    label { display: block; margin: .45rem 0; }
+    button { border: 1px solid #464646; border-radius: .25rem; background: #fff; padding: .35rem .7rem; cursor: pointer; }
+    button:hover { background: #f1f5f9; }
+    img { max-width: 100%; height: auto; }
+    table { border-collapse: collapse; margin: .75rem 0; }
+    th, td { border: 1px solid #9ca3af; padding: .35rem .6rem; text-align: left; }
+    .feedback { margin-top: .75rem; padding: .65rem .8rem; border-left: 4px solid #64748b; min-height: 1.5em; }
+  </style>
+</head>
+<body>
+  <main class="quiz">
+    <section class="question" data-frame-height="560">
+      <h2>Question 1</h2>
+      <p>Zombies are walking past my house. I have a bag of apples and I throw an apple at each zombie as it walks past. I record my hits and misses as follows:</p>
+      <p><em>MISS MISS HIT MISS HIT HIT MISS HIT MISS HIT HIT ...etc</em></p>
+      <p>What type of distribution best describes these data?</p>
+      <label><input type="radio" name="q1" value="normal"> Normal distribution</label>
+      <label><input type="radio" name="q1" value="binomial"> Binomial distribution</label>
+      <label><input type="radio" name="q1" value="poisson"> Poisson distribution</label>
+      <label><input type="radio" name="q1" value="gamma"> Gamma distribution</label>
+      <button type="button" class="next" data-next="1" hidden>Next question</button>
+      <div class="feedback" id="feedback-q1" aria-live="polite"></div>
+    </section>
+    <section class="question" data-frame-height="1300">
+      <h2>Question 2</h2>
+      <p>I have trained my 25 cats to weigh themselves every morning on the bathroom scales. This morning I plotted their distribution. What best describes this distribution?</p>
+      <img src="cat_weight-1.png" alt="Histogram of the weights of 25 cats">
+      <label><input type="radio" name="q2" value="normal"> Normal distribution</label>
+      <label><input type="radio" name="q2" value="binomial"> Binomial distribution</label>
+      <label><input type="radio" name="q2" value="negative-binomial"> Negative binomial distribution</label>
+      <label><input type="radio" name="q2" value="poisson"> Poisson distribution</label>
+      <button type="button" class="next" data-next="2" hidden>Next question</button>
+      <div class="feedback" id="feedback-q2" aria-live="polite"></div>
+    </section>
+    <section class="question" data-frame-height="800">
+      <h2>Question 3</h2>
+      <p>Every morning I cycle to work. One week I decided to count the number of car drivers who make close passes (i.e. pass less than 1 m from my right elbow). What might describe this distribution?</p>
+      <table>
+        <thead><tr><th>Day</th><th>Number of close passes</th></tr></thead>
+        <tbody>
+          <tr><td>Monday</td><td>2</td></tr><tr><td>Tuesday</td><td>0</td></tr>
+          <tr><td>Wednesday</td><td>1</td></tr><tr><td>Thursday</td><td>0</td></tr>
+          <tr><td>Friday</td><td>3</td></tr><tr><td>Saturday</td><td>0</td></tr>
+          <tr><td>Sunday</td><td>1</td></tr>
+        </tbody>
+      </table>
+      <label><input type="radio" name="q3" value="normal"> Normal distribution</label>
+      <label><input type="radio" name="q3" value="binomial"> Binomial distribution</label>
+      <label><input type="radio" name="q3" value="gamma"> Gamma distribution</label>
+      <label><input type="radio" name="q3" value="poisson"> Poisson distribution</label>
+      <button type="button" class="next" data-next="3" hidden>Finish</button>
+      <div class="feedback" id="feedback-q3" aria-live="polite"></div>
+    </section>
+  </main>
+  <script>
+    const explanations = {
+      q1: 'Correct. These data are discrete and have two possible outcomes, hit and miss (0 and 1), so a binomial distribution is appropriate.',
+      q2: 'Correct. Weight is continuous and these observations are reasonably close to a bell-shaped normal distribution. With only 25 cats, it will not fit perfectly.',
+      q3: 'Correct. These are discrete integer counts with a lower bound of zero and no fixed upper limit, so a Poisson distribution is appropriate.'
+    };
+    const questions = Array.from(document.querySelectorAll('.question'));
+    const answers = { q1: 'binomial', q2: 'normal', q3: 'poisson' };
+    function resizeEmbeddedQuiz() {
+      return;
+    }
+    questions[0].classList.add('active');
+    window.addEventListener('load', resizeEmbeddedQuiz);
+
+    questions.forEach((question) => {
+      const input = question.querySelectorAll('input[type="radio"]');
+      const name = input[0].name;
+      const feedback = question.querySelector('.feedback');
+      const next = question.querySelector('.next');
+      input.forEach((option) => option.addEventListener('change', () => {
+        if (option.checked && option.value === answers[name]) {
+          feedback.textContent = explanations[name];
+          feedback.style.borderLeftColor = '#15803d';
+          next.hidden = false;
+          resizeEmbeddedQuiz();
+        } else if (option.checked) {
+          feedback.textContent = 'Not quite. Try another answer.';
+          feedback.style.borderLeftColor = '#b91c1c';
+          next.hidden = true;
+          resizeEmbeddedQuiz();
+        }
+      }));
+      next.addEventListener('click', () => {
+        const nextIndex = Number(next.dataset.next);
+        if (nextIndex < questions.length) {
+          question.classList.remove('active');
+          questions[nextIndex].classList.add('active');
+          resizeEmbeddedQuiz();
+        } else {
+          feedback.textContent = 'Well done — you have completed the quiz.';
+          next.hidden = true;
+          resizeEmbeddedQuiz();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
